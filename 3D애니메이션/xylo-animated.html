@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xylo - Fueling Next-Gen AI Applications</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Canvas for 3D particles */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FDB750 0%, #F59E0B 100%);
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #999999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-learn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid #333333;
+            border-radius: 25px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-learn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #555555;
+        }
+
+        .btn-signup {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #FDB750 0%, #F59E0B 100%);
+            border: none;
+            border-radius: 25px;
+            color: #000000;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(253, 183, 80, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 85vh;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #999999;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+        }
+
+        /* Glowing Button */
+        .btn-get-started {
+            position: relative;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #FDB750 0%, #F59E0B 100%);
+            border: none;
+            border-radius: 30px;
+            color: #000000;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards, pulse 2s ease-in-out 1.9s infinite;
+            box-shadow: 0 0 30px rgba(253, 183, 80, 0.5);
+        }
+
+        .btn-get-started:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 50px rgba(253, 183, 80, 0.6);
+        }
+
+        .btn-get-started::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #FDB750, #F59E0B);
+            border-radius: 30px;
+            z-index: -1;
+            opacity: 0;
+            animation: glow 2s ease-in-out 1.9s infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(253, 183, 80, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(253, 183, 80, 0.8);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #555555;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Particles Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span>Xylo</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#docs">Docs</a></li>
+            <li><a href="#searching">Searching</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#blog">Blog</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="#learn" class="btn-learn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <circle cx="8" cy="8" r="7" stroke="currentColor" fill="none"/>
+                    <path d="M8 4v4l3 3"/>
+                </svg>
+                Learn More
+            </a>
+            <button class="btn-signup">Signup</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>
+            Fueling Next-Gen AI<br>
+            Applications using Oracle
+        </h1>
+        <p class="subtitle">
+            Revolutionizing AI Applications:<br>
+            Oracle's Advanced Database Capabilities
+        </p>
+        <button class="btn-get-started">
+            Get Started
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 3l5 5-5 5M13 8H3"/>
+            </svg>
+        </button>
+    </section>
+
+    <!-- Footer -->
+    <div class="footer">Made with love, by Kaviso</div>
+
+    <!-- 3D Particle Animation Script -->
+    <script>
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Canvas 크기 설정
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // 마우스 위치
+        let mouseX = canvas.width / 2;
+        let mouseY = canvas.height / 2;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+
+        // 파티클 클래스
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                // 중앙을 기준으로 원형으로 배치
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 100 + Math.random() * 300;
+                
+                this.baseX = Math.cos(angle) * radius;
+                this.baseY = Math.sin(angle) * radius;
+                this.baseZ = Math.random() * 400 - 200;
+                
+                this.x = this.baseX;
+                this.y = this.baseY;
+                this.z = this.baseZ;
+                
+                // 회전 속도
+                this.rotationSpeed = 0.001 + Math.random() * 0.003;
+                this.angle = angle;
+                
+                // 크기와 투명도
+                this.size = 2 + Math.random() * 4;
+                this.opacity = 0.3 + Math.random() * 0.7;
+                
+                // 색상 (흰색 계열)
+                this.color = `rgba(255, 255, 255, ${this.opacity})`;
+            }
+
+            update() {
+                // 원형 궤도로 회전
+                this.angle += this.rotationSpeed;
+                
+                // 기본 위치 계산
+                const radius = Math.sqrt(this.baseX * this.baseX + this.baseY * this.baseY);
+                this.baseX = Math.cos(this.angle) * radius;
+                this.baseY = Math.sin(this.angle) * radius;
+                
+                // 마우스 위치에 따른 3D 회전 적용
+                const cosX = Math.cos(currentRotationX);
+                const sinX = Math.sin(currentRotationX);
+                const cosY = Math.cos(currentRotationY);
+                const sinY = Math.sin(currentRotationY);
+                
+                // Y축 회전
+                let x = this.baseX * cosY - this.baseZ * sinY;
+                let z = this.baseX * sinY + this.baseZ * cosY;
+                
+                // X축 회전
+                let y = this.baseY * cosX - z * sinX;
+                z = this.baseY * sinX + z * cosX;
+                
+                this.x = x;
+                this.y = y;
+                this.z = z;
+                
+                // Z축 움직임 (앞뒤로)
+                this.baseZ += 1.5;
+                if (this.baseZ > 200) {
+                    this.baseZ = -200;
+                }
+            }
+
+            draw() {
+                const scale = 300 / (300 + this.z);
+                const x2d = this.x * scale + canvas.width / 2;
+                const y2d = this.y * scale + canvas.height / 2;
+                const size = this.size * scale;
+
+                // 화면 밖이면 그리지 않음
+                if (x2d < -50 || x2d > canvas.width + 50 || 
+                    y2d < -50 || y2d > canvas.height + 50 || 
+                    scale < 0.1) {
+                    return;
+                }
+
+                const finalOpacity = this.opacity * scale;
+                ctx.fillStyle = `rgba(255, 255, 255, ${finalOpacity})`;
+                ctx.shadowBlur = 15 * scale;
+                ctx.shadowColor = `rgba(255, 255, 255, ${finalOpacity * 0.8})`;
+                
+                // 막대 형태로 그리기
+                ctx.fillRect(x2d - size / 2, y2d - size * 3, size, size * 6);
+            }
+        }
+
+        // 파티클 생성
+        const particles = [];
+        const particleCount = 80;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // 애니메이션 루프
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 부드러운 회전 효과
+            currentRotationX += (targetRotationX - currentRotationX) * 0.05;
+            currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // 마우스 인터랙션
+        canvas.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // 마우스 위치를 회전 각도로 변환 (-0.5 ~ 0.5)
+            targetRotationY = ((mouseX / canvas.width) - 0.5) * 0.8;
+            targetRotationX = ((mouseY / canvas.height) - 0.5) * 0.8;
+        });
+    </script>
+</body>
+</html>

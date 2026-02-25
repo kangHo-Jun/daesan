@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanta.js BIRDS - 3D 새떼 배경</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #vanta-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 20px;
+            color: #cccccc;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="vanta-background"></div>
+
+    <div class="content">
+        <div class="badge">🦅 Vanta.js BIRDS Effect</div>
+        <h1>Flying Birds<br>Background</h1>
+        <p>마우스를 움직여보세요! 새떼가 날아다닙니다.</p>
+        <button class="btn">Get Started</button>
+    </div>
+
+    <!-- Three.js (필수) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    
+    <!-- Vanta.js BIRDS -->
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
+
+    <script>
+        // Vanta.js BIRDS 초기화
+        VANTA.BIRDS({
+            el: "#vanta-background",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x0a0a0a,  // 배경색
+            color1: 0xff00ff,            // 새 색상 1
+            color2: 0x00ffff,            // 새 색상 2
+            colorMode: 'variance',       // 색상 모드
+            birdSize: 1.50,              // 새 크기
+            wingSpan: 30.00,             // 날개 펼침
+            speedLimit: 5.00,            // 속도 제한
+            separation: 50.00,           // 새들 간 거리
+            alignment: 40.00,            // 정렬
+            cohesion: 30.00,             // 응집력
+            quantity: 3.00               // 새 개수
+        });
+    </script>
+</body>
+</html>

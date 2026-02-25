@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>애니메이션 테스트</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+        .info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: monospace;
+            font-size: 16px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        프레임: <span id="fps">0</span><br>
+        마우스: <span id="mouse">0, 0</span>
+    </div>
+    <canvas id="myCanvas"></canvas>
+
+    <script>
+        // Canvas 설정
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // 변수
+        let circles = [];
+        let frame = 0;
+        let mx = canvas.width / 2;
+        let my = canvas.height / 2;
+
+        // 원 생성
+        for (let i = 0; i < 50; i++) {
+            circles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                r: Math.random() * 20 + 10,
+                color: `hsl(${Math.random() * 360}, 70%, 50%)`
+            });
+        }
+
+        // 애니메이션 루프
+        function draw() {
+            // 배경 (페이드 효과)
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // 원들 그리기 및 업데이트
+            circles.forEach(c => {
+                // 마우스 영향
+                const dx = mx - c.x;
+                const dy = my - c.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < 200) {
+                    c.vx += dx * 0.0001;
+                    c.vy += dy * 0.0001;
+                }
+
+                // 이동
+                c.x += c.vx;
+                c.y += c.vy;
+
+                // 벽 튕김
+                if (c.x < 0 || c.x > canvas.width) c.vx *= -1;
+                if (c.y < 0 || c.y > canvas.height) c.vy *= -1;
+
+                // 그리기
+                ctx.fillStyle = c.color;
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 빛나는 효과
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+
+            // 프레임 카운터 업데이트
+            frame++;
+            document.getElementById('fps').textContent = frame;
+
+            requestAnimationFrame(draw);
+        }
+
+        // 마우스 이벤트
+        canvas.addEventListener('mousemove', (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            document.getElementById('mouse').textContent = 
+                Math.floor(mx) + ', ' + Math.floor(my);
+        });
+
+        // 클릭하면 원 추가
+        canvas.addEventListener('click', (e) => {
+            circles.push({
+                x: e.clientX,
+                y: e.clientY,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                r: Math.random() * 30 + 15,
+                color: `hsl(${Math.random() * 360}, 70%, 50%)`
+            });
+        });
+
+        // 리사이즈
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 시작!
+        draw();
+        console.log('✅ 애니메이션 시작!');
+        console.log('원 개수:', circles.length);
+        console.log('Canvas 크기:', canvas.width, 'x', canvas.height);
+    </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Cursor - 3D 액체 효과</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            overflow: hidden;
+            cursor: none;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ffff 0%, #ff00ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            font-size: 20px;
+            color: #cccccc;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="content">
+        <h1>Liquid 3D Effect</h1>
+        <p>마우스를 움직여보세요!<br>3D 액체처럼 따라오는 메타볼 효과 💧</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let metaballs = [];
+        let hue = 0;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // 마우스 위치
+        let mouse = { x: width / 2, y: height / 2 };
+        let targetX = mouse.x;
+        let targetY = mouse.y;
+
+        // 메타볼 클래스
+        class Metaball {
+            constructor(x, y, radius, delay) {
+                this.x = x;
+                this.y = y;
+                this.targetX = x;
+                this.targetY = y;
+                this.radius = radius;
+                this.delay = delay;
+                this.hue = hue;
+            }
+
+            update() {
+                // 부드러운 따라가기 (다른 속도)
+                const dx = this.targetX - this.x;
+                const dy = this.targetY - this.y;
+                
+                this.x += dx * (0.1 - this.delay * 0.02);
+                this.y += dy * (0.1 - this.delay * 0.02);
+            }
+
+            draw() {
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.radius
+                );
+                
+                gradient.addColorStop(0, `hsla(${this.hue}, 100%, 50%, 1)`);
+                gradient.addColorStop(0.5, `hsla(${this.hue + 30}, 100%, 50%, 0.5)`);
+                gradient.addColorStop(1, `hsla(${this.hue + 60}, 100%, 50%, 0)`);
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // 메타볼 초기화
+        for (let i = 0; i < 8; i++) {
+            metaballs.push(
+                new Metaball(
+                    width / 2, 
+                    height / 2, 
+                    80 - i * 8,
+                    i
+                )
+            );
+        }
+
+        // 애니메이션 루프
+        function animate() {
+            // 배경 클리어 (페이드 효과)
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.15)';
+            ctx.fillRect(0, 0, width, height);
+
+            // 메타볼 타겟 업데이트
+            metaballs.forEach(ball => {
+                ball.targetX = targetX;
+                ball.targetY = targetY;
+                ball.hue = hue;
+                ball.update();
+            });
+
+            // 블러 효과 적용
+            ctx.filter = 'blur(20px) contrast(20)';
+            
+            // 메타볼 그리기
+            metaballs.forEach(ball => {
+                ball.draw();
+            });
+
+            ctx.filter = 'none';
+
+            // 색상 변경
+            hue += 1;
+            if (hue > 360) hue = 0;
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // 마우스 이벤트
+        window.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        });
+
+        // 클릭 시 파동 효과
+        canvas.addEventListener('click', (e) => {
+            const ripple = new Metaball(e.clientX, e.clientY, 150, 0);
+            metaballs.push(ripple);
+            
+            setTimeout(() => {
+                const index = metaballs.indexOf(ripple);
+                if (index > -1) metaballs.splice(index, 1);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

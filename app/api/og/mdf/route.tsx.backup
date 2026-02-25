@@ -1,0 +1,99 @@
+import { ImageResponse } from '@vercel/og';
+import { NextRequest } from 'next/server';
+
+export const runtime = 'edge';
+
+export async function GET(req: NextRequest) {
+    try {
+        const { searchParams } = new URL(req.url);
+
+        const density = searchParams.get('density') || '650';
+        const grade = searchParams.get('grade') || 'E1';
+        const thickness = searchParams.get('thickness') || '9T · 12T · 15T · 18T';
+        const size = searchParams.get('size') || '1220 × 2440';
+
+        const densityNum = parseInt(density);
+        const dashOffset = (densityNum / 1000) * 283;
+
+        return new ImageResponse(
+            (
+                <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', backgroundColor: '#FDF5E6', backgroundImage: 'linear-gradient(135deg, #FDF5E6 0%, #FAEFD4 100%)', padding: '40px', fontFamily: 'sans-serif' }}>
+                    <div style={{ display: 'flex', flex: 1, gap: '20px' }}>
+                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: 'white', borderRadius: '20px', padding: '30px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', position: 'relative' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                                <img src={new URL('/assets/mdf.png', req.url).toString()} alt="MDF" style={{ width: '180px', height: '140px', objectFit: 'contain' }} />
+                            </div>
+                            <h1 style={{ fontSize: '48px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#1A1A1A', display: 'flex' }}>MDF</h1>
+                            <p style={{ fontSize: '18px', color: '#666', margin: '0 0 20px 0', display: 'flex' }}>Medium Density Fiberboard</p>
+                            <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
+                                <div style={{ backgroundColor: '#2d5a3d', color: 'white', padding: '6px 12px', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold', display: 'flex' }}>밀도 {density}</div>
+                                <div style={{ border: '1px solid #2d5a3d', color: '#2d5a3d', padding: '6px 12px', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold', display: 'flex' }}>KS F 3200</div>
+                                <div style={{ backgroundColor: '#f0f0f0', color: '#1A1A1A', padding: '6px 12px', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold', display: 'flex' }}>등급 {grade}</div>
+                            </div>
+                            <div style={{ marginTop: 'auto', borderTop: '1px solid #eee', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px' }}>
+                                    <span style={{ color: '#666' }}>규격</span>
+                                    <span style={{ fontWeight: 'bold' }}>{size} mm</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px' }}>
+                                    <span style={{ color: '#666' }}>두께</span>
+                                    <span style={{ fontWeight: 'bold' }}>{thickness}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ flex: 1.2, display: 'flex', flexDirection: 'column', backgroundColor: 'white', borderRadius: '20px', padding: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', gap: '20px' }}>
+                            <h2 style={{ fontSize: '20px', fontWeight: 'bold', borderBottom: '2px solid #2d5a3d', paddingBottom: '10px', margin: 0, display: 'flex' }}>Visual Insight Comparison</h2>
+                            <div style={{ display: 'flex', gap: '12px', flex: 1 }}>
+                                <div style={{ flex: 1, backgroundColor: '#f9f9f9', borderRadius: '12px', padding: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+                                    <div style={{ width: '80px', height: '80px', backgroundColor: '#ddd', borderRadius: '50%', marginBottom: '10px', opacity: 0.5, display: 'flex' }}></div>
+                                    <span style={{ fontSize: '12px', color: '#888', display: 'flex' }}>일반 MDF</span>
+                                    <b style={{ fontSize: '14px', color: '#444', display: 'flex' }}>거친 섬유 구조</b>
+                                </div>
+                                <div style={{ flex: 1, backgroundColor: '#E8F5E9', borderRadius: '12px', padding: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', border: '1px solid #C8E6C9' }}>
+                                    <div style={{ width: '80px', height: '80px', backgroundColor: '#2d5a3d', borderRadius: '50%', marginBottom: '10px', opacity: 0.1, display: 'flex' }}></div>
+                                    <span style={{ fontSize: '12px', color: '#2d5a3d', display: 'flex' }}>고밀도 HDF</span>
+                                    <b style={{ fontSize: '14px', color: '#2d5a3d', display: 'flex' }}>조밀한 섬유 구조</b>
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', position: 'relative' }}>
+                                <svg width="180" height="180" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#f0f0f0" strokeWidth="10" />
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#2d5a3d" strokeWidth="10" strokeDasharray={`${dashOffset} 283`} strokeLinecap="round" transform="rotate(-90 50 50)" />
+                                </svg>
+                                <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                                    <span style={{ fontSize: '32px', fontWeight: 'bold', color: '#2d5a3d', display: 'flex' }}>{density}</span>
+                                    <span style={{ fontSize: '14px', color: '#666', display: 'flex' }}>kg/㎥</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ flex: 0.8, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: 'white', borderRadius: '20px', padding: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', gap: '12px' }}>
+                                <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: 0, display: 'flex' }}>Usage Guide</h2>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '12px' }}>
+                                    <span style={{ fontSize: '24px', display: 'flex' }}>🪑</span>
+                                    <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'flex' }}>가구 내장재</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '12px' }}>
+                                    <span style={{ fontSize: '24px', display: 'flex' }}>📐</span>
+                                    <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'flex' }}>인테리어 마감</span>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '12px' }}>
+                                    <span style={{ fontSize: '24px', display: 'flex' }}>🧱</span>
+                                    <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'flex' }}>건축 판넬</span>
+                                </div>
+                            </div>
+                            <div style={{ backgroundColor: '#2d5a3d', borderRadius: '20px', padding: '24px', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center', boxShadow: '0 10px 30px rgba(45,90,61,0.2)' }}>
+                                <span style={{ fontSize: '12px', opacity: 0.8, marginBottom: '4px', display: 'flex' }}>건설 자재 전문 유통</span>
+                                <span style={{ fontSize: '24px', fontWeight: 'bold', display: 'flex' }}>ZART CONST.</span>
+                                <div style={{ marginTop: '12px', fontSize: '10px', opacity: 0.6, display: 'flex' }}>https://zart-const.com</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ),
+            { width: 1200, height: 630 }
+        );
+    } catch (e: any) {
+        return new Response(`Failed to generate image: ${e.message}`, { status: 500 });
+    }
+}
