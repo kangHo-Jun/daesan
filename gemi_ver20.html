@@ -14,7 +14,7 @@
 
     <div class="zart-wrap">
         <!-- Section 1: 회사 차별점 (통계 카드) -->
-        <section class="zart-section" data-animate>
+        <section class="zart-section zart-section--trust" data-animate>
             <div class="zart-stat-grid">
                 <div class="zart-stat-card">
                     <div class="zart-stat-icon">
@@ -64,7 +64,7 @@
         </section>
 
         <!-- Section 2: 가격 동향 (hover 그래프) -->
-        <section class="zart-section" data-animate>
+        <section class="zart-section zart-section--price" data-animate>
             <div class="zart-title-section">
                 <h2>최근 7일 가격 동향</h2>
                 <p>전국 자재 유통망 실시간 시세를 기반으로 합니다.</p>
@@ -90,96 +90,20 @@
         </section>
 
         <!-- Section 3: 제품 상세 (Gemini 스타일 통합 인포그래픽) -->
-        <section class="zart-section" data-animate>
-            <div class="zart-gemini-infographic">
-                <!-- 상단: 헤더 -->
-                <div class="zart-g-header">
-                    <div class="zart-g-img-box">
-                        <img src="예제/MDF/mdf.png" alt="HDF">
-                    </div>
-                    <div class="zart-g-info">
-                        <h2>HDF</h2>
-                        <p>850kg/㎥+ 고밀도 섬유판</p>
-                    </div>
-                    <div class="zart-g-badge-box">
-                        <div class="zart-g-badge-circle">E1</div>
-                        <span>친환경 인증</span>
-                    </div>
-                </div>
-
-                <!-- 중단: 비교 + 게이지 -->
-                <div class="zart-g-mid">
-                    <!-- Visual Insight -->
-                    <div class="zart-g-visual-insight">
-                        <h3>Visual Insight Graphic</h3>
-                        <div class="zart-g-compare-grid">
-                            <div class="zart-g-compare-card">
-                                <h4>일반 MDF</h4>
-                                <div class="zart-g-zoom-box">
-                                    <div
-                                        style="width: 100%; height: 100%; background: #eee; display: flex; align-items:center; justify-content:center; color:#999; font-size:12px;">
-                                        거친 구조 이미지</div>
-                                </div>
-                                <p>거친 섬유 구조</p>
-                            </div>
-                            <div class="zart-g-compare-card active">
-                                <h4>고밀도 HDF ✓</h4>
-                                <div class="zart-g-zoom-box">
-                                    <div
-                                        style="width: 100%; height: 100%; background: #d4e1d5; display: flex; align-items:center; justify-content:center; color:#2d5a3d; font-size:12px;">
-                                        조밀 구조 이미지</div>
-                                </div>
-                                <p>조밀한 섬유 구조</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 게이지 -->
-                    <div class="zart-g-gauge-area">
-                        <h3>밀도 높음</h3>
-                        <div class="zart-g-gauge-card">
-                            <div class="zart-g-gauge-svg">
-                                <svg width="120" height="70" viewBox="0 0 120 70">
-                                    <path d="M 10 60 A 50 50 0 0 1 110 60" fill="none" stroke="#eee" stroke-width="10"
-                                        stroke-linecap="round" />
-                                    <path d="M 10 60 A 50 50 0 0 1 110 60" fill="none" stroke="#2d5a3d"
-                                        stroke-width="10" stroke-linecap="round" stroke-dasharray="110 157" />
-                                    <text x="60" y="55" text-anchor="middle" font-size="20" font-weight="700"
-                                        fill="#1A1A1A">35</text>
-                                </svg>
-                            </div>
-                            <span class="zart-g-gauge-label">휨 강도 (N/㎟)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 하단: 가이드 -->
-                <div class="zart-g-foot">
-                    <h3>Usage Guide Card</h3>
-                    <div class="zart-g-usage-list">
-                        <div class="zart-g-usage-item">
-                            <span class="zart-g-usage-icon">🪑</span>
-                            <span class="zart-g-usage-name">가구재</span>
-                        </div>
-                        <div class="zart-g-usage-item">
-                            <span class="zart-g-usage-icon">📐</span>
-                            <span class="zart-g-usage-name">마루판</span>
-                        </div>
-                        <div class="zart-g-usage-item">
-                            <span class="zart-g-usage-icon">🏗️</span>
-                            <span class="zart-g-usage-name">건축 내장재</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <section class="zart-section zart-section--product" data-animate>
+            <section style="text-align:center; margin:60px 0;">
+                <img src="/section3.png" alt="제품 상세 인포그래픽"
+                    style="max-width:790px; width:100%; height:auto; border-radius:12px;" />
+            </section>
         </section>
 
         <!-- Section 4: 물성표 인포그래픽 -->
-        <section class="zart-section" data-animate>
+        <section class="zart-section zart-section--tech" data-animate>
             <div class="zart-title-section">
                 <h2>제품 물성 상세</h2>
                 <p>HDF 두께별 주요 물성 (KS F 3200 인증 기준)</p>
             </div>
-            <div class="zart-property-wrap">
+            <div class="zart-property-wrap zart-tech-card">
                 <div class="zart-prop-header">
                     <div class="zart-prop-col name">특성</div>
                     <div class="zart-prop-col">단위</div>
@@ -202,36 +126,36 @@
         </section>
 
         <!-- Section 5: 만화 4컷 (마지막 이동) -->
-        <section class="zart-section" data-animate>
+        <section class="zart-section zart-section--usage" data-animate>
             <div class="zart-title-section">
                 <h2>왜 자트 HDF인가요?</h2>
                 <p>조밀한 밀도와 강력한 강도로 차이를 만듭니다.</p>
             </div>
             <div class="zart-comic-grid">
-                <div class="zart-comic-card">
+                <div class="zart-comic-card zart-usage-card">
                     <div
-                        style="height:150px; background:#e8f5e9; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
+                        style="height:150px; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
                         <b style="font-size:18px;">01. 압도적 밀도</b>
                         <p style="font-size:12px; color:#666; margin-top:8px;">850kg/㎥ 이상의 고밀도 구조</p>
                     </div>
                 </div>
-                <div class="zart-comic-card">
+                <div class="zart-comic-card zart-usage-card">
                     <div
-                        style="height:150px; background:#f1f8e9; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
+                        style="height:150px; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
                         <b style="font-size:18px;">02. 강력한 내구성</b>
                         <p style="font-size:12px; color:#666; margin-top:8px;">습기와 충격에 강한 마루판 최적 자재</p>
                     </div>
                 </div>
-                <div class="zart-comic-card">
+                <div class="zart-comic-card zart-usage-card">
                     <div
-                        style="height:150px; background:#dcedc8; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
+                        style="height:150px; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
                         <b style="font-size:18px;">03. 정밀 가공</b>
                         <p style="font-size:12px; color:#666; margin-top:8px;">단면이 깔끔하여 정밀한 가구 제작 가능</p>
                     </div>
                 </div>
-                <div class="zart-comic-card">
+                <div class="zart-comic-card zart-usage-card">
                     <div
-                        style="height:150px; background:#c5e1a5; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
+                        style="height:150px; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:20px;">
                         <b style="font-size:18px;">04. 안심 품질</b>
                         <p style="font-size:12px; color:#666; margin-top:8px;">친환경 E1 등급 및 KS 인증 준수</p>
                     </div>
@@ -268,6 +192,8 @@
             requestAnimationFrame(update);
         }
     </script>
+    <link rel="stylesheet" href="gemi_exp_color.css">
+    <link rel="stylesheet" href="gemi_exp_layout.css">
 </body>
 
 </html>
