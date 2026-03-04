@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx skills add nextlevelbuilder/ui-ux-pro-max-skill@ui-ux-pro-max -g -y)"
+    ]
+  }
+}

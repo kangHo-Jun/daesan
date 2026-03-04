@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe24 독립 페이지 테스트</title>
+    <link rel="stylesheet" href="/brand/style.css">
+    <style>
+        body {
+            padding: 50px;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .test-box {
+            border: 2px dashed #ccc;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .status-success {
+            color: #2d5a3d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-box">
+        <h1>Cafe24 독립 페이지 테스트 (GNB/Footer 제거)</h1>
+        <p>이 페이지 상단에 <code>&lt;!--@layout(/layout/basic/layout.html)--&gt;</code> 코드가 없는 상태입니다.</p>
+        <p class="status-success">GNB와 Footer가 보이지 않는다면 독립 페이지 구현 성공입니다.</p>
+        <hr>
+        <div id="css-test">
+            <h3>외부 CSS 로드 테스트</h3>
+            <p id="css-status">이 텍스트가 파란색이면 외부 CSS 로드 성공입니다.</p>
+        </div>
+        <div id="img-test">
+            <h3>이미지 경로 테스트</h3>
+            <img src="/brand/test-img.png" alt="테스트 이미지" style="max-width:200px; border:1px solid #eee;">
+        </div>
+    </div>
+</body>
+
+</html>
