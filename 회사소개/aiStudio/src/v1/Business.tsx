@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import React from 'react';
 
 const BUSINESS_AREAS = [
   {
@@ -25,31 +24,15 @@ interface BusinessCardProps {
 }
 
 const BusinessCard: React.FC<BusinessCardProps> = ({ area, idx }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Subtle parallax move: -50px to 50px
-  const y = useTransform(scrollYProgress, [0, 1], [-50, 50]);
-
   return (
-    <motion.div 
-      ref={cardRef}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -10, scale: 1.02 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, delay: idx * 0.2 }}
+    <div 
       className="group cursor-pointer p-8 rounded-[2.5rem] transition-all duration-500 hover:bg-slate-50 hover:shadow-2xl hover:shadow-dark/5"
     >
       <div className="relative aspect-[4/5] overflow-hidden rounded-3xl mb-8">
-        <motion.img 
+        <img 
           src={area.image} 
           alt={area.title}
-          style={{ y, scale: 1.2 }} // Scale up to provide room for parallax
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.25]"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.1]"
           referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-dark/20 group-hover:bg-dark/40 transition-colors duration-500" />
@@ -58,7 +41,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ area, idx }) => {
       <p className="text-muted leading-relaxed text-sm">
         {area.desc}
       </p>
-    </motion.div>
+    </div>
   );
 }
 

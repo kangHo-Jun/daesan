@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { cn } from './lib/utils';
 
@@ -52,36 +51,29 @@ export default function App() {
       </header>
 
       {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="lg:hidden fixed inset-0 z-50 bg-white pt-24 px-8"
-          >
-            <ul className="space-y-8">
-              {[
-                { id: 'hero', label: '홈' },
-                { id: 'philosophy', label: '경영 철학' },
-                { id: 'business', label: '사업 영역' },
-                { id: 'ai-innovation', label: 'AI 혁신' },
-                { id: 'vision', label: '미래 비전' },
-                { id: 'directions', label: '오시는 길' },
-              ].map((item) => (
-                <li key={item.id}>
-                  <button
-                    onClick={() => scrollToSection(item.id)}
-                    className="text-3xl font-bold text-dark tracking-tight"
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isMobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-white pt-24 px-8 overflow-y-auto">
+          <ul className="space-y-8 pb-10">
+            {[
+              { id: 'hero', label: '홈' },
+              { id: 'philosophy', label: '경영 철학' },
+              { id: 'business', label: '사업 영역' },
+              { id: 'ai-innovation', label: 'AI 혁신' },
+              { id: 'vision', label: '미래 비전' },
+              { id: 'directions', label: '오시는 길' },
+            ].map((item) => (
+              <li key={item.id}>
+                <button
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-3xl font-bold text-dark tracking-tight"
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Main Content */}
       <main className="lg:pl-[220px]">

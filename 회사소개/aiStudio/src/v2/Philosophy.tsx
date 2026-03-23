@@ -1,51 +1,132 @@
-import React from 'react';
-import { Zap, ShieldCheck, Award, Tag } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Zap, Target, Shield, Tag } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const VALUES = [
-  { 
-    title: '신속', 
-    desc: '24시간 이내 배송 시스템으로 현장의 멈춤 없는 시공을 지원합니다.', 
-    icon: Zap 
+  {
+    id: '01',
+    keyword: '신속 SPEED',
+    desc: '당일·익일 배송 시스템, 현장 일정에 맞춘 즉각 대응',
+    icon: Zap,
+    style: 'basic'
   },
-  { 
-    title: '정확', 
-    desc: 'AI 기반 스마트 검수 시스템으로 오배송 제로를 지향합니다.', 
-    icon: ShieldCheck 
+  {
+    id: '02',
+    keyword: '정확 ACCURACY',
+    desc: '수량·규격·납기 오차 없는 정밀 발주 관리',
+    icon: Target,
+    style: 'highlight'
   },
-  { 
-    title: '품질', 
-    desc: '엄격한 품질 기준을 통과한 검증된 자재만을 공급합니다.', 
-    icon: Award 
+  {
+    id: '03',
+    keyword: '품질 QUALITY',
+    desc: '검증된 브랜드 자재만 취급, 하자 없는 현장 완성',
+    icon: Shield,
+    style: 'basic'
   },
-  { 
-    title: '가격', 
-    desc: '유통 단계 축소를 통해 업계 최저 수준의 단가를 실현합니다.', 
-    icon: Tag 
-  },
+  {
+    id: '04',
+    keyword: '가격 PRICE',
+    desc: '직거래 기반 합리적 단가, 투명한 견적 공개',
+    icon: Tag,
+    style: 'basic'
+  }
 ];
 
 export default function Philosophy() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    // 1. Card Entrance Animations
+    const cards = document.querySelectorAll('.philosophy-card');
+    
+    cards.forEach((card, i) => {
+      gsap.fromTo(card,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: i * 0.15,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+            once: true,
+          }
+        }
+      );
+    });
+    
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
+  }, []);
+
   return (
-    <section id="philosophy" className="py-[120px] bg-bg-main">
-      <div className="max-w-[1200px] mx-auto px-8">
-        <div className="mb-20 text-center lg:text-left">
-          <span className="text-accent text-[11px] font-bold tracking-widest uppercase mb-4 block">Our Philosophy</span>
-          <h2 className="text-4xl lg:text-5xl font-bold text-text-dark tracking-tight">
-            대산이 지키는 <br className="lg:hidden" /> 4대 핵심 가치
+    <section 
+      id="philosophy" 
+      ref={sectionRef}
+      className="philosophy-section relative py-[120px] overflow-hidden"
+    >
+      {/* Overlay Layer (Z-index 0 to be behind content) */}
+      <div 
+        className="absolute inset-0 z-0 bg-[#0d2318]/65" 
+      />
+
+      <div className="relative z-10 max-w-[1200px] mx-auto px-8">
+        {/* Header */}
+        <div className="text-center mb-20 max-w-2xl mx-auto">
+          <span className="text-[#C9A84C] text-[10px] font-bold tracking-[0.35em] uppercase mb-6 block">
+            01 · PHILOSOPHY
+          </span>
+          <h2 className="text-white text-4xl lg:text-5xl font-[800] leading-tight mb-6 font-serif tracking-tight">
+            거창한 구호보다<br />강력한 기본의 힘
           </h2>
+          <p className="text-white/50 text-sm md:text-base leading-relaxed tracking-wide">
+            ㈜대산은 35년의 업력이 증명하는 4대 핵심 가치로 움직입니다
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1000px] mx-auto">
           {VALUES.map((item, idx) => (
-            <div 
-              key={idx}
-              className="bg-bg-card p-10 border border-border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/5 group"
+            <div
+              key={item.id}
+              className={`
+                philosophy-card group relative p-10 rounded-xl transition-all duration-300 hover:-translate-y-2
+                ${item.style === 'highlight' 
+                  ? 'bg-[#C9A84C] text-[#0d2318]' 
+                  : 'bg-[#0d2318]/75 backdrop-blur-md border border-[#C9A84C]/30 text-white'
+                }
+              `}
             >
-              <div className="w-14 h-14 bg-bg-main rounded-2xl flex items-center justify-center mb-8 group-hover:bg-accent transition-colors duration-500">
-                <item.icon className="w-6 h-6 text-text-dark group-hover:text-bg-card transition-colors duration-500" />
+              {/* Number Badge */}
+              <div className={`
+                inline-flex items-center justify-center px-2 py-0.5 border text-[10px] mb-8
+                ${item.style === 'highlight' ? 'border-[#0d2318]/30' : 'border-[#C9A84C]/50 text-[#C9A84C]'}
+              `}>
+                {item.id}
               </div>
-              <h3 className="text-2xl font-bold text-text-dark mb-4">{item.title}</h3>
-              <p className="text-text-gray leading-relaxed text-sm">
+
+              {/* Icon */}
+              <div className="mb-6">
+                <item.icon className="w-8 h-8 stroke-[1.5]" />
+              </div>
+
+              {/* Keyword */}
+              <h3 className="text-2xl font-bold mb-4 tracking-tight">
+                {item.keyword}
+              </h3>
+
+              {/* Description */}
+              <p className={`
+                text-sm leading-relaxed max-w-[280px]
+                ${item.style === 'highlight' ? 'text-[#0d2318]/80' : 'text-white/60'}
+              `}>
                 {item.desc}
               </p>
             </div>
@@ -53,6 +134,5 @@ export default function Philosophy() {
         </div>
       </div>
     </section>
-
   );
 }

@@ -55,4 +55,18 @@
   }
 }
 
+.philosophy-section {
+  background-image: url('/images/philosophy-office.png');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .philosophy-section {
+    background-attachment: scroll;
+  }
+}
+
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");

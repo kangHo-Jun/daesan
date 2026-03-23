@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { ChevronDown, TreeDeciduous, Layers, Layout, DoorOpen } from 'lucide-react';
 
 const STEPS = [
@@ -38,12 +37,7 @@ export default function SupplyChain() {
       
       <div className="max-w-[1200px] mx-auto px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
+          <div>
             <span className="text-accent text-[11px] font-bold tracking-widest uppercase mb-4 block">Supply Chain</span>
             <h2 className="text-4xl lg:text-6xl font-bold leading-tight mb-8 tracking-tight">
               한 번의 발주로<br />
@@ -59,7 +53,7 @@ export default function SupplyChain() {
               </div>
               <p className="text-sm text-bg-card/40">스크롤하여 공급망의 흐름을 확인하세요</p>
             </div>
-          </motion.div>
+          </div>
 
           <div className="relative">
             {/* Connecting Line Animation */}
@@ -67,12 +61,8 @@ export default function SupplyChain() {
             
             <div className="space-y-6 relative">
               {STEPS.map((step, idx) => (
-                <motion.div 
+                <div 
                   key={idx}
-                  initial={{ opacity: 0, y: 30, x: 20 }}
-                  whileInView={{ opacity: 1, y: 0, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.2 }}
                   className="group relative"
                 >
                   <div className="bg-bg-card/5 border border-bg-card/10 p-6 md:p-8 rounded-2xl flex items-center gap-6 group hover:bg-bg-card/10 hover:border-accent/50 transition-all duration-500 relative overflow-hidden">
@@ -93,15 +83,11 @@ export default function SupplyChain() {
                     </div>
 
                     {/* Decorative Arrow on Hover */}
-                    <motion.div 
-                      className="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
+                    <div className="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity">
                       <ChevronDown className="w-5 h-5 -rotate-90 text-accent" />
-                    </motion.div>
+                    </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>

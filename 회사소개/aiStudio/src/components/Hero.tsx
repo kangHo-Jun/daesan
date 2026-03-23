@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
@@ -26,17 +25,8 @@ export default function Hero() {
       ref={containerRef}
     >
       {/* Dynamic Background Image */}
-      <motion.div 
-        initial={{ scale: 1.2 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 2, ease: "easeOut" }}
-        className="absolute inset-0 z-0"
-      >
-        <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="w-full h-full"
-        >
+      <div className="absolute inset-0 z-0">
+        <div className="w-full h-full">
           <video 
             autoPlay 
             muted 
@@ -52,48 +42,27 @@ export default function Hero() {
               className="w-full h-full object-cover"
             />
           </video>
-        </motion.div>
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/40 to-dark/90" />
-      </motion.div>
+      </div>
 
       {/* Floating Particles/Shapes */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         {[...Array(6)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
-            initial={{ 
-              opacity: 0,
-              x: Math.random() * 100 + "%", 
-              y: Math.random() * 100 + "%" 
-            }}
-            animate={{ 
-              opacity: [0.1, 0.3, 0.1],
-              x: [null, (Math.random() - 0.5) * 200 + "px"],
-              y: [null, (Math.random() - 0.5) * 200 + "px"],
-              rotate: [0, 180]
-            }}
-            transition={{ 
-              duration: 10 + Math.random() * 20, 
-              repeat: Infinity, 
-              ease: "linear" 
-            }}
-            className="absolute border border-accent/20 rounded-lg"
+            className="absolute border border-accent/20 rounded-lg opacity-10"
             style={{ 
               width: Math.random() * 100 + 50 + "px", 
-              height: Math.random() * 100 + 50 + "px" 
+              height: Math.random() * 100 + 50 + "px",
+              left: Math.random() * 100 + "%", 
+              top: Math.random() * 100 + "%" 
             }}
           />
         ))}
         
         {/* Animated Light Leak */}
-        <motion.div 
-          animate={{ 
-            x: ['-50%', '50%', '-50%'],
-            y: ['-20%', '20%', '-20%'],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 left-0 w-[150%] h-[150%] bg-radial-gradient from-accent/5 to-transparent blur-[120px]"
-        />
+        <div className="absolute top-0 left-0 w-[150%] h-[150%] bg-radial-gradient from-accent/5 to-transparent blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-[1200px] w-full px-8 text-center lg:text-left">
@@ -113,37 +82,15 @@ export default function Hero() {
           <div className="flex items-center justify-center lg:justify-start gap-1 mb-4 animate-glow-scan relative font-display text-[#123628]">
             {/* 'Daesan' Sequential Assembly */}
             {["D", "a", "e", "s", "a", "n"].map((letter, i) => (
-              <motion.span
-                key={i}
-                initial={{ 
-                  y: i % 2 === 0 ? -100 : 100, 
-                  x: i < 3 ? -50 : 50, 
-                  rotate: i * 15, 
-                  opacity: 0,
-                  filter: "blur(10px)"
-                }}
-                animate={{ y: 0, x: 0, rotate: 0, opacity: 1, filter: "blur(0px)" }}
-                transition={{ 
-                  delay: 0.6 + (i * 0.1), 
-                  type: "spring", 
-                  damping: 12, 
-                  stiffness: 100 
-                }}
-                className="inline-block"
-              >
+              <span key={i} className="inline-block">
                 {letter}
-              </motion.span>
+              </span>
             ))}
             
             {/* Registered Trademark Symbol */}
-            <motion.span
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 1.5, duration: 0.5 }}
-              className="text-2xl md:text-4xl self-start mt-2 ml-1"
-            >
+            <span className="text-2xl md:text-4xl self-start mt-2 ml-1">
               ®
-            </motion.span>
+            </span>
           </div>
           <span className="font-serif text-primary italic font-extrabold text-4xl md:text-6xl lg:text-7xl block mt-4 tracking-normal drop-shadow-lg">
             유통의 새로운 기준
