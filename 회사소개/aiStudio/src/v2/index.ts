@@ -2,7 +2,6 @@ export { default as AIInnovation } from './AIInnovation';
 export { default as Business } from './Business';
 export { default as Directions } from './Directions';
 export { default as Hero } from './Hero';
-export { default as ImpactNumbers } from './ImpactNumbers';
 export { default as Partners } from './Partners';
 export { default as Philosophy } from './Philosophy';
 export { default as Sidebar } from './Sidebar';

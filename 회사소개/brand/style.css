@@ -5,22 +5,27 @@
 
 /* [Design System] */
 :root {
-  --color-primary:    #002244;   /* 네이비 — 좌측 네비 배경, 강조 텍스트 */
-  --color-accent:     #0055FF;   /* 블루 — CTA 버튼, 포인트 라인 */
-  --color-bg:         #F8F9FA;   /* 라이트 그레이 — 메인 배경 */
-  --color-white:      #FFFFFF;
-  --color-text:       #1A1A1A;   /* 본문 텍스트 */
-  --color-subtext:    #666666;   /* 서브텍스트 */
+  --color-primary: #002244;
+  /* 네이비 — 좌측 네비 배경, 강조 텍스트 */
+  --color-accent: #0055FF;
+  /* 블루 — CTA 버튼, 포인트 라인 */
+  --color-bg: #F8F9FA;
+  /* 라이트 그레이 — 메인 배경 */
+  --color-white: #FFFFFF;
+  --color-text: #1A1A1A;
+  /* 본문 텍스트 */
+  --color-subtext: #666666;
+  /* 서브텍스트 */
 
   /* 폰트 */
   --font-main: 'Pretendard', 'Noto Sans KR', sans-serif;
 
   /* 여백 시스템 (8px Grid) */
-  --space-xs:  8px;
-  --space-sm:  16px;
-  --space-md:  24px;
-  --space-lg:  48px;
-  --space-xl:  80px;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 48px;
+  --space-xl: 80px;
   --space-xxl: 120px;
 
   /* 레이아웃 */
@@ -160,7 +165,8 @@ section {
   justify-content: center;
   align-items: flex-start;
   padding-left: var(--space-xl);
-  background: var(--color-primary); /* placeholder background */
+  background: var(--color-primary);
+  /* placeholder background */
   color: var(--color-white);
 }
 
@@ -203,69 +209,83 @@ section {
 
 /* Common Section Title */
 .section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.section-subtitle {
   font-size: 40px;
   font-weight: 800;
-  margin-bottom: var(--space-lg);
   color: var(--color-primary);
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+/* Grids */
+.philosophy-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 50px;
+}
+
+.innovation-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.innovation-grid .card {
+  padding: 40px;
+}
+
+.val-card h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.val-card p {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Quote Box */
+.quote-box {
   position: relative;
-  display: inline-block;
-}
-
-.section-title::after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 4px;
-  background-color: var(--color-accent);
-  margin-top: 10px;
-}
-
-/* Placeholder for Images */
-.placeholder-img {
-  background-color: #E9ECEF;
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-subtext);
-  font-style: italic;
-  margin-top: var(--space-md);
-  border-radius: 8px;
-}
-
-/* Cards Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
-}
-
-.card {
-  background: var(--color-white);
-  padding: var(--space-lg);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.card h3 {
-  margin-bottom: var(--space-sm);
+  padding: 60px 40px !important;
+  background: #f1f4f8 !important;
+  border-left: 6px solid var(--color-accent) !important;
+  font-size: 1.4rem !important;
+  font-weight: 500;
   color: var(--color-primary);
+  margin-top: 80px;
 }
 
-.card p {
-  color: var(--color-subtext);
-  line-height: 1.6;
+.quote-box::after {
+  content: '"';
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 80px;
+  color: rgba(0, 85, 255, 0.1);
+  font-family: serif;
 }
 
 /* [Responsive Layout] */
+@media (max-width: 1024px) {
+  .innovation-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .sidebar {
-    transform: translateX(-100%); /* Hide sidebar */
+    transform: translateX(-100%);
     transition: transform 0.3s ease;
   }
-  
+
   .mobile-header {
     display: flex;
   }
@@ -273,14 +293,18 @@ section {
   .main-content {
     margin-left: 0;
     width: 100%;
-    padding-top: 60px; /* mobile header space */
+    padding-top: 60px;
   }
 
   section {
-    padding: var(--space-lg) var(--space-sm);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .section-subtitle {
+    font-size: 28px;
   }
 
   #hero {
-    padding-left: var(--space-sm);
+    padding-left: var(--space-md);
   }
 }

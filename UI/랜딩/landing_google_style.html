@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대산 — 다이나믹 인트로</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  min-height: 100vh;
+  background: #0d0d0d;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Sans KR', sans-serif;
+  overflow: hidden;
+}
+
+/* ── 배경 vanta 대체 (데모용) ── */
+.bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at 60% 40%, #0f1e2e 0%, #0a0a0a 70%);
+}
+.bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,.018) 60px),
+    repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,.018) 60px);
+}
+
+/* ── 메인 래퍼 ── */
+.main_visual_area {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* ════════════════════════════
+   섹션 타이틀 블록
+════════════════════════════ */
+.section_title { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+/* 1. .tit — 슬로건 */
+.tit {
+  font-size: clamp(11px, 1.2vw, 14px);
+  letter-spacing: 7px;
+  color: transparent;
+  text-transform: uppercase;
+  font-weight: 300;
+  /* 골드 라인과 함께 페이드인 */
+  opacity: 0;
+  animation: tit-in .8s .3s ease forwards;
+  position: relative;
+  padding: 0 20px;
+  margin-bottom: 10px;
+}
+.tit::before, .tit::after {
+  content: '';
+  position: absolute; top: 50%;
+  width: 0; height: 1px;
+  background: #e8c97a;
+  animation: line-expand .6s .9s ease forwards;
+}
+.tit::before { right: 100%; }
+.tit::after  { left:  100%; }
+
+@keyframes tit-in {
+  from { opacity: 0; transform: translateY(8px); color: transparent; }
+  to   { opacity: 1; transform: none; color: #e8c97a; }
+}
+@keyframes line-expand { to { width: 40px; } }
+
+
+/* 2. .eng — 브랜드명 (구글 로고 스타일) */
+.eng {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(72px, 14vw, 160px);
+  line-height: 1;
+  letter-spacing: -4px;
+  display: flex; align-items: flex-start;
+}
+
+/* 각 글자 래퍼 */
+.eng .c {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(60px) scale(.8);
+  animation: char-drop .6s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+/* 구글 로고처럼 글자마다 색상 */
+.eng .c:nth-child(1) { color: #4A90D9; animation-delay: .6s;  } /* D - 블루  */
+.eng .c:nth-child(2) { color: #E8C97A; animation-delay: .72s; } /* a - 골드  */
+.eng .c:nth-child(3) { color: #fff;    animation-delay: .84s; } /* e - 화이트*/
+.eng .c:nth-child(4) { color: #E8C97A; animation-delay: .96s; } /* s - 골드  */
+.eng .c:nth-child(5) { color: #4A90D9; animation-delay:1.08s; } /* a - 블루  */
+.eng .c:nth-child(6) { color: #fff;    animation-delay:1.20s; } /* n - 화이트*/
+.eng sup {
+  font-size: .2em; vertical-align: super; margin-left: 2px;
+  color: #e8c97a; font-family: 'Noto Sans KR', sans-serif; font-weight: 300;
+  opacity: 0;
+  animation: sup-pop .4s 1.5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes char-drop {
+  from { opacity:0; transform: translateY(60px) scale(.8); }
+  to   { opacity:1; transform: none; }
+}
+@keyframes sup-pop {
+  from { opacity:0; transform: scale(0) rotate(-20deg); }
+  to   { opacity:1; transform: none; }
+}
+
+/* 글자 호버 — 통통 튀기 */
+.eng .c { cursor: default; transition: transform .2s, color .2s; }
+.eng .c:hover { transform: translateY(-8px) scale(1.1) !important; filter: brightness(1.3); }
+
+
+/* 3. .txt — 태그라인 */
+.txt {
+  font-size: clamp(12px, 1.3vw, 15px);
+  color: #888; font-weight: 300; letter-spacing: 2px;
+  margin-top: 14px;
+  opacity: 0;
+  animation: fade-up .7s 1.7s ease forwards;
+}
+@keyframes fade-up {
+  from { opacity:0; transform: translateY(10px); }
+  to   { opacity:1; transform: none; }
+}
+
+
+/* ════════════════════════════
+   검색창 — 주인공 등장
+════════════════════════════ */
+.search_wrap {
+  margin-top: 40px;
+  opacity: 0;
+  transform: translateY(20px) scale(.95);
+  animation: search-reveal .8s 2.2s cubic-bezier(.16,1,.3,1) forwards;
+  width: min(540px, 90vw);
+}
+
+@keyframes search-reveal {
+  from { opacity:0; transform: translateY(20px) scale(.95); }
+  to   { opacity:1; transform: none; }
+}
+
+/* 유혹 문구 */
+.search_hint {
+  font-size: 11px; letter-spacing: 3px; color: #e8c97a;
+  text-align: center; margin-bottom: 10px;
+  opacity: 0;
+  animation: blink-hint 1s 2.6s ease forwards, hint-pulse 2s 3.6s ease-in-out infinite;
+}
+@keyframes blink-hint {
+  from { opacity:0; } to { opacity:1; }
+}
+@keyframes hint-pulse {
+  0%,100%{ opacity:.7 } 50%{ opacity:1 }
+}
+
+.search_box {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50px;
+  padding: 0 8px 0 24px;
+  gap: 8px;
+  transition: border-color .3s, box-shadow .3s, background .3s;
+  /* 등장 후 골드 테두리 펄스 */
+  animation: search-reveal .8s 2.2s cubic-bezier(.16,1,.3,1) forwards,
+             border-pulse 1.5s 3s ease-in-out 3;
+}
+@keyframes border-pulse {
+  0%,100%{ border-color:rgba(255,255,255,.15); box-shadow:none; }
+  50%    { border-color:#e8c97a; box-shadow: 0 0 20px rgba(232,201,122,.25); }
+}
+.search_box:focus-within {
+  border-color: #e8c97a;
+  box-shadow: 0 0 0 3px rgba(232,201,122,.15), 0 8px 32px rgba(0,0,0,.4);
+  background: rgba(255,255,255,.09);
+}
+
+.search_box input {
+  flex: 1; background: none; border: none; outline: none;
+  color: #fff; font-family: inherit;
+  font-size: 15px; font-weight: 300;
+  padding: 16px 0; letter-spacing: .5px;
+}
+.search_box input::placeholder { color: #555; }
+
+.search_box button {
+  flex-shrink: 0;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #e8c97a; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .2s;
+}
+.search_box button:hover { background: #f0d68a; transform: scale(1.08); }
+.search_box button svg { width: 18px; height: 18px; }
+
+/* 검색 키워드 제안 */
+.search_tags {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: center; margin-top: 14px;
+  opacity: 0;
+  animation: fade-up .6s 3.2s ease forwards;
+}
+.search_tags span {
+  font-size: 11px; letter-spacing: 1px; color: #666;
+  border: 1px solid #333; border-radius: 20px;
+  padding: 4px 12px; cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+.search_tags span:hover { color: #e8c97a; border-color: #e8c97a; }
+.search_tags span::before { content: '#'; margin-right: 2px; color: #444; }
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="main_visual_area">
+  <div class="section_title">
+
+    <!-- .tit -->
+    <div class="tit">건축자재의 기준</div>
+
+    <!-- .eng — 글자 하나씩 분리 -->
+    <div class="eng custom_font" id="brand"></div>
+
+    <!-- .txt -->
+    <div class="txt">가격과 품질, 그리고 서비스까지 완벽!</div>
+  </div>
+
+  <!-- 검색창 -->
+  <div class="search_wrap">
+    <div class="search_hint">↓ &nbsp; 원하는 자재를 바로 검색하세요 &nbsp; ↓</div>
+    <div class="search_box">
+      <input type="text" placeholder="합판, 석고보드, 단열재, 창호...">
+      <button>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+    </div>
+    <div class="search_tags">
+      <span>합판</span><span>석고보드</span><span>단열재</span>
+      <span>OSB</span><span>창호</span><span>MDF</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// 브랜드명 글자 하나씩 생성
+const colors = ['#4A90D9','#E8C97A','#ffffff','#E8C97A','#4A90D9','#ffffff'];
+const letters = 'Daesan'.split('');
+const brandEl = document.getElementById('brand');
+
+letters.forEach((ch, i) => {
+  const span = document.createElement('span');
+  span.className = 'c';
+  span.textContent = ch;
+  // 색상은 CSS :nth-child로 처리됨
+  brandEl.appendChild(span);
+});
+
+// sup ®
+const sup = document.createElement('sup');
+sup.textContent = '®';
+brandEl.appendChild(sup);
+
+// 검색창 태그 클릭 시 입력
+document.querySelectorAll('.search_tags span').forEach(tag => {
+  tag.addEventListener('click', () => {
+    document.querySelector('.search_box input').value = tag.textContent.replace('#','');
+    document.querySelector('.search_box input').focus();
+  });
+});
+</script>
+</body>
+</html>

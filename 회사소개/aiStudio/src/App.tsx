@@ -15,7 +15,6 @@ const UI = UI_VERSION === "v1" ? V1 : V2;
 const { 
   Sidebar, 
   Hero, 
-  ImpactNumbers, 
   Philosophy, 
   SupplyChain, 
   Business, 
@@ -87,7 +86,6 @@ export default function App() {
       {/* Main Content */}
       <main className="lg:pl-[220px]">
         <Hero />
-        <ImpactNumbers />
         <Philosophy />
         <SupplyChain />
         <Business />

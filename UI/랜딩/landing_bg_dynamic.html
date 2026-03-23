@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대산 — 다이나믹 배경</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #e8c97a;
+  --blue: #4A90D9;
+  --bg: #0a0a0a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ══════════════════════════════
+   레이어 1 — 캔버스 배경
+══════════════════════════════ */
+#bg-canvas {
+  position: fixed; inset: 0; z-index: 0;
+}
+
+/* ══════════════════════════════
+   레이어 2 — 중앙 빛 집중 (검색창 포커스)
+   검색창 등장 후 활성화
+══════════════════════════════ */
+.spotlight {
+  position: fixed; inset: 0; z-index: 1;
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 62%,
+    rgba(232,201,122,.07) 0%,
+    rgba(232,201,122,.03) 35%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 2s ease;
+  pointer-events: none;
+}
+.spotlight.on { opacity: 1; }
+
+/* 가장자리 비네트 — 검색 영역으로 시선 집중 */
+.vignette {
+  position: fixed; inset: 0; z-index: 1;
+  background: radial-gradient(
+    ellipse 80% 75% at 50% 50%,
+    transparent 30%,
+    rgba(0,0,0,.55) 100%
+  );
+  opacity: 0;
+  transition: opacity 2.5s 0.5s ease;
+  pointer-events: none;
+}
+.vignette.on { opacity: 1; }
+
+/* ══════════════════════════════
+   콘텐츠
+══════════════════════════════ */
+.main_visual_area {
+  position: relative; z-index: 2;
+  height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 20px;
+  gap: 0;
+  text-align: center;
+}
+
+/* ── 슬로건 ── */
+.tit {
+  font-size: clamp(11px, 1.2vw, 13px);
+  letter-spacing: 7px; color: var(--gold);
+  text-transform: uppercase; font-weight: 300;
+  opacity: 0;
+  animation: fade-up .8s .3s ease forwards;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 8px;
+}
+.tit::before, .tit::after {
+  content: ''; flex-shrink: 0;
+  width: 0; height: 1px; background: var(--gold);
+  animation: line-out .6s .9s ease forwards;
+}
+@keyframes line-out { to { width: 36px; } }
+
+/* ── 브랜드 ── */
+.eng {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(76px, 14vw, 164px);
+  line-height: 1; letter-spacing: -5px;
+  display: flex; align-items: flex-start;
+  margin-bottom: 4px;
+}
+.eng .c {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(70px) scale(.75);
+  animation: char-in .65s cubic-bezier(.16,1,.3,1) forwards;
+  cursor: default;
+  transition: transform .25s, filter .25s;
+}
+.eng .c:hover { transform: translateY(-10px) scale(1.12) !important; filter: brightness(1.4); }
+.eng .c:nth-child(1){ color:#4A90D9; animation-delay:.6s; }
+.eng .c:nth-child(2){ color:var(--gold); animation-delay:.72s; }
+.eng .c:nth-child(3){ color:#fff;    animation-delay:.84s; }
+.eng .c:nth-child(4){ color:var(--gold); animation-delay:.96s; }
+.eng .c:nth-child(5){ color:#4A90D9; animation-delay:1.08s; }
+.eng .c:nth-child(6){ color:#fff;    animation-delay:1.20s; }
+.eng sup {
+  font-size:.18em; vertical-align:super; margin-left:3px;
+  color:var(--gold); font-family:'Noto Sans KR',sans-serif; font-weight:300;
+  opacity:0;
+  animation: pop .45s 1.5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+/* ── 태그라인 ── */
+.txt {
+  font-size: clamp(12px, 1.3vw, 15px);
+  color: #777; font-weight: 300; letter-spacing: 2px;
+  margin-top: 12px; margin-bottom: 0;
+  opacity: 0;
+  animation: fade-up .7s 1.7s ease forwards;
+}
+
+/* ── 검색 래퍼 ── */
+.search_wrap {
+  margin-top: 36px;
+  width: min(520px, 90vw);
+  opacity: 0;
+  transform: translateY(18px) scale(.96);
+  animation: search-in .9s 2.1s cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.search_hint {
+  font-size: 10px; letter-spacing: 4px; color: var(--gold);
+  margin-bottom: 10px; opacity: 0;
+  animation: fade-up .6s 2.8s ease forwards,
+             pulse 2.2s 3.4s ease-in-out infinite;
+}
+
+.search_box {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50px;
+  padding: 0 6px 0 22px; gap: 8px;
+  transition: border-color .35s, box-shadow .35s, background .35s;
+  /* 등장 후 골드 테두리 펄스 3회 */
+  animation: border-call 1.6s 3s ease-in-out 3;
+}
+.search_box:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(232,201,122,.13), 0 10px 40px rgba(0,0,0,.5);
+  background: rgba(255,255,255,.085);
+}
+.search_box input {
+  flex:1; background:none; border:none; outline:none;
+  color:#fff; font-family:inherit; font-size:15px; font-weight:300;
+  padding:15px 0; letter-spacing:.5px;
+}
+.search_box input::placeholder { color:#444; }
+.search_box button {
+  flex-shrink:0; width:42px; height:42px; border-radius:50%;
+  background:var(--gold); border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition: background .2s, transform .2s;
+}
+.search_box button:hover { background:#f0d98a; transform:scale(1.1); }
+.search_box button svg { width:17px; height:17px; }
+
+.search_tags {
+  display:flex; gap:8px; flex-wrap:wrap;
+  justify-content:center; margin-top:12px;
+  opacity:0;
+  animation: fade-up .6s 3.1s ease forwards;
+}
+.search_tags span {
+  font-size:11px; letter-spacing:1px; color:#555;
+  border:1px solid #2a2a2a; border-radius:20px;
+  padding:4px 12px; cursor:pointer;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.search_tags span:hover { color:var(--gold); border-color:var(--gold); background:rgba(232,201,122,.06); }
+
+/* ── 공통 키프레임 ── */
+@keyframes fade-up  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+@keyframes char-in  { from{opacity:0;transform:translateY(70px) scale(.75)} to{opacity:1;transform:none} }
+@keyframes pop      { from{opacity:0;transform:scale(0) rotate(-15deg)} to{opacity:1;transform:none} }
+@keyframes search-in{ from{opacity:0;transform:translateY(18px) scale(.96)} to{opacity:1;transform:none} }
+@keyframes pulse    { 0%,100%{opacity:.6} 50%{opacity:1} }
+@keyframes border-call {
+  0%,100%{ border-color:rgba(255,255,255,.12); box-shadow:none; }
+  50%    { border-color:var(--gold); box-shadow:0 0 24px rgba(232,201,122,.22); }
+}
+</style>
+</head>
+<body>
+
+<!-- 빛 레이어들 -->
+<div class="spotlight" id="spotlight"></div>
+<div class="vignette"  id="vignette"></div>
+
+<!-- 캔버스 배경 -->
+<canvas id="bg-canvas"></canvas>
+
+<div class="main_visual_area">
+  <div class="section_title">
+    <div class="tit">건축자재의 기준</div>
+    <div class="eng custom_font" id="brand"></div>
+    <div class="txt">가격과 품질, 그리고 서비스까지 완벽!</div>
+  </div>
+
+  <div class="search_wrap">
+    <div class="search_hint">↓ &nbsp; 원하는 자재를 바로 검색하세요 &nbsp; ↓</div>
+    <div class="search_box">
+      <input type="text" placeholder="합판, 석고보드, 단열재, 창호...">
+      <button>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+        </svg>
+      </button>
+    </div>
+    <div class="search_tags">
+      <span>합판</span><span>석고보드</span><span>단열재</span>
+      <span>OSB</span><span>창호</span><span>MDF</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   브랜드명 글자 생성
+══════════════════════════════════════════ */
+const brandEl = document.getElementById('brand');
+'Daesan'.split('').forEach(ch => {
+  const s = document.createElement('span');
+  s.className = 'c'; s.textContent = ch;
+  brandEl.appendChild(s);
+});
+const sup = document.createElement('sup');
+sup.textContent = '®'; brandEl.appendChild(sup);
+
+/* ══════════════════════════════════════════
+   검색창 태그 클릭
+══════════════════════════════════════════ */
+document.querySelectorAll('.search_tags span').forEach(tag => {
+  tag.addEventListener('click', () => {
+    document.querySelector('.search_box input').value = tag.textContent;
+    document.querySelector('.search_box input').focus();
+  });
+});
+
+/* ══════════════════════════════════════════
+   캔버스 배경 — 2단계 연출
+   Phase 1 (0~2s):   정적, 희미한 격자
+   Phase 2 (2s~):    건축 도면 느낌 기하학 파편들이
+                     서서히 떠오르며 부유
+══════════════════════════════════════════ */
+const canvas = document.getElementById('bg-canvas');
+const ctx    = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+/* ── 타임라인 ── */
+const START      = performance.now();
+const PHASE2_MS  = 2200;   // 검색창 등장 시점
+const FADE_DUR   = 2000;   // phase2 페이드인 시간
+
+/* ── 격자 설정 ── */
+const GRID = 60;
+
+/* ── 파편(Shard) 클래스 ── */
+class Shard {
+  constructor() { this.reset(true); }
+
+  reset(initial = false) {
+    this.x  = Math.random() * W;
+    this.y  = initial ? Math.random() * H : H + 40;
+    this.vx = (Math.random() - .5) * .3;
+    this.vy = -(Math.random() * .4 + .15);
+    this.size   = Math.random() * 32 + 10;
+    this.type   = Math.floor(Math.random() * 4); // 0=rect 1=L자 2=circle 3=line
+    this.rot    = Math.random() * Math.PI * 2;
+    this.rotSpd = (Math.random() - .5) * .004;
+    this.alpha  = 0;
+    this.targetA= Math.random() * .13 + .04;
+    this.color  = Math.random() < .35 ? '#e8c97a' : '#4a7ab5'; // 골드 or 블루
+  }
+
+  update(p2ratio) {
+    if (p2ratio <= 0) return;
+    this.alpha += (this.targetA * p2ratio - this.alpha) * .03;
+    this.x += this.vx; this.y += this.vy; this.rot += this.rotSpd;
+    if (this.y < -60) this.reset();
+  }
+
+  draw() {
+    if (this.alpha < .005) return;
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rot);
+    ctx.globalAlpha = this.alpha;
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth   = 1;
+
+    if (this.type === 0) {
+      // 빈 사각형
+      ctx.strokeRect(-this.size/2, -this.size/2, this.size, this.size);
+    } else if (this.type === 1) {
+      // L자 선
+      ctx.beginPath();
+      ctx.moveTo(-this.size/2, -this.size/2);
+      ctx.lineTo(-this.size/2,  this.size/2);
+      ctx.lineTo( this.size/2,  this.size/2);
+      ctx.stroke();
+    } else if (this.type === 2) {
+      // 원
+      ctx.beginPath();
+      ctx.arc(0, 0, this.size/2, 0, Math.PI*2);
+      ctx.stroke();
+    } else {
+      // 십자
+      ctx.beginPath();
+      ctx.moveTo(-this.size/2, 0); ctx.lineTo(this.size/2, 0);
+      ctx.moveTo(0, -this.size/2); ctx.lineTo(0, this.size/2);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+}
+
+/* ── 파편 풀 ── */
+const SHARD_COUNT = 55;
+const shards = Array.from({ length: SHARD_COUNT }, () => new Shard());
+
+/* ── 메인 루프 ── */
+function draw(ts) {
+  const elapsed = ts - START;
+  const p2raw   = Math.max(0, elapsed - PHASE2_MS) / FADE_DUR;
+  const p2ratio = Math.min(1, p2raw);           // 0→1 페이드
+
+  /* 검색창 등장 후 스포트라이트 활성화 */
+  if (p2ratio > .1 && !document.getElementById('spotlight').classList.contains('on')) {
+    document.getElementById('spotlight').classList.add('on');
+    document.getElementById('vignette').classList.add('on');
+  }
+
+  ctx.clearRect(0, 0, W, H);
+
+  /* ── Phase 1 배경: 희미한 격자 (항상) ── */
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,.03)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x <= W; x += GRID) {
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let y = 0; y <= H; y += GRID) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+  ctx.restore();
+
+  /* ── Phase 2: 격자 점 강조 ── */
+  if (p2ratio > 0) {
+    ctx.save();
+    ctx.globalAlpha = p2ratio * .18;
+    ctx.fillStyle = '#e8c97a';
+    for (let x = GRID; x < W; x += GRID) {
+      for (let y = GRID; y < H; y += GRID) {
+        // 중심에서 멀수록 흐리게 → 검색창 주변 집중
+        const cx = W/2, cy = H * .58;
+        const dist = Math.hypot(x - cx, y - cy);
+        const fade = Math.max(0, 1 - dist / (W * .45));
+        ctx.globalAlpha = p2ratio * .22 * fade;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.5, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+
+  /* ── Phase 2: 기하학 파편 부유 ── */
+  shards.forEach(s => { s.update(p2ratio); s.draw(); });
+
+  /* ── Phase 2: 검색창 아래 수평 글로우 라인 ── */
+  if (p2ratio > 0) {
+    const cy = H * .68;
+    const grd = ctx.createLinearGradient(0, cy, W, cy);
+    grd.addColorStop(0,    'transparent');
+    grd.addColorStop(.35,  `rgba(232,201,122,${p2ratio * .08})`);
+    grd.addColorStop(.5,   `rgba(232,201,122,${p2ratio * .18})`);
+    grd.addColorStop(.65,  `rgba(232,201,122,${p2ratio * .08})`);
+    grd.addColorStop(1,    'transparent');
+    ctx.save();
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, cy - 1, W, 2);
+    ctx.restore();
+  }
+
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
