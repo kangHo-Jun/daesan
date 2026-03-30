@@ -5,25 +5,25 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const LOGOS_ROW_1 = [
-  { name: '자이천연석고보드', src: '/images/zai.jpg' },
-  { name: 'LX Z:IN', src: '/images/LX.png' },
-  { name: 'GS건설', src: '/images/GS.svg' },
-  { name: '영림몰딩도어', src: '/images/youngrim.png' },
-  { name: '자이천연석고보드', src: '/images/zai.jpg' },
-  { name: 'LX Z:IN', src: '/images/LX.png' },
-  { name: 'GS건설', src: '/images/GS.svg' },
-  { name: '영림몰딩도어', src: '/images/youngrim.png' },
+  { name: '자이천연석고보드', src: `${import.meta.env.BASE_URL}images/zai.jpg` },
+  { name: 'LX Z:IN', src: `${import.meta.env.BASE_URL}images/LX.png` },
+  { name: 'GS건설', src: `${import.meta.env.BASE_URL}images/GS.svg` },
+  { name: '영림몰딩도어', src: `${import.meta.env.BASE_URL}images/youngrim.png` },
+  { name: '자이천연석고보드', src: `${import.meta.env.BASE_URL}images/zai.jpg` },
+  { name: 'LX Z:IN', src: `${import.meta.env.BASE_URL}images/LX.png` },
+  { name: 'GS건설', src: `${import.meta.env.BASE_URL}images/GS.svg` },
+  { name: '영림몰딩도어', src: `${import.meta.env.BASE_URL}images/youngrim.png` },
 ];
 
 const LOGOS_ROW_2 = [
-  { name: 'GS건설', src: '/images/GS.svg' },
-  { name: '영림몰딩도어', src: '/images/youngrim.png' },
-  { name: '자이천연석고보드', src: '/images/zai.jpg' },
-  { name: 'LX Z:IN', src: '/images/LX.png' },
-  { name: 'GS건설', src: '/images/GS.svg' },
-  { name: '영림몰딩도어', src: '/images/youngrim.png' },
-  { name: '자이천연석고보드', src: '/images/zai.jpg' },
-  { name: 'LX Z:IN', src: '/images/LX.png' },
+  { name: 'GS건설', src: `${import.meta.env.BASE_URL}images/GS.svg` },
+  { name: '영림몰딩도어', src: `${import.meta.env.BASE_URL}images/youngrim.png` },
+  { name: '자이천연석고보드', src: `${import.meta.env.BASE_URL}images/zai.jpg` },
+  { name: 'LX Z:IN', src: `${import.meta.env.BASE_URL}images/LX.png` },
+  { name: 'GS건설', src: `${import.meta.env.BASE_URL}images/GS.svg` },
+  { name: '영림몰딩도어', src: `${import.meta.env.BASE_URL}images/youngrim.png` },
+  { name: '자이천연석고보드', src: `${import.meta.env.BASE_URL}images/zai.jpg` },
+  { name: 'LX Z:IN', src: `${import.meta.env.BASE_URL}images/LX.png` },
 ];
 
 const PERFORMANCE_CARDS = [

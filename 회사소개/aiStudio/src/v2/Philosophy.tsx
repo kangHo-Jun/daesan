@@ -37,6 +37,7 @@ const VALUES = [
 
 export default function Philosophy() {
   const sectionRef = useRef<HTMLElement>(null);
+  const backgroundImageUrl = `${import.meta.env.BASE_URL}images/AI-in-Construction-Material-Manufacturing.webp`;
 
   useEffect(() => {
     const cards = document.querySelectorAll('.philosophy-card');
@@ -66,7 +67,16 @@ export default function Philosophy() {
   }, []);
 
   return (
-    <section id="philosophy" ref={sectionRef} className="relative overflow-hidden bg-[#f5f0e8] px-[40px] py-[80px]">
+    <section
+      id="philosophy"
+      ref={sectionRef}
+      className="relative overflow-hidden bg-[#f5f0e8] px-[40px] py-[80px]"
+      style={{
+        backgroundImage: `linear-gradient(rgba(245,240,232,0.92), rgba(245,240,232,0.92)), url(${backgroundImageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <div className="relative z-10 mx-auto max-w-[1100px]">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <h2 className="mb-5 font-[700] leading-[1.3] tracking-tight text-[#1a3a28]" style={{ fontFamily: "'Nanum Myeongjo', serif", fontSize: '38px' }}>
