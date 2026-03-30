@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daesan Gold Icon Filter Verification</title>
+  <!-- Pretendard CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    /* Reset & Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif; background: #fff; padding: 50px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+
+    .comparison_container { display: flex; gap: 60px; align-items: center; background: #123628; padding: 40px; border-radius: 20px; }
+    
+    .item { text-align: center; color: #fff; }
+    .label { margin-top: 15px; font-size: 14px; font-weight: 600; opacity: 0.8; }
+
+    .icon_box { width: 60px; height: 60px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* SVG Style */
+    .icon_box svg { width: 30px; height: 30px; }
+
+    /* PNG Filter Style - Targeting #C9A84C */
+    .ds-magnifier-test {
+      width: 30px;
+      /* Target Hex: #C9A84C */
+      filter: invert(76%) sepia(49%) saturate(579%) hue-rotate(344deg) brightness(86%) contrast(89%);
+    }
+
+    .color_swatch { width: 100px; height: 40px; background: #C9A84C; border-radius: 8px; margin-top: 20px; border: 2px solid #fff; }
+    .swatch_label { color: #123628; font-weight: 900; margin-top: 5px; }
+
+  </style>
+</head>
+<body>
+
+  <h1 style="color:#123628">Daesan Gold Icon Verification</h1>
+  <p>Comparison between Reference SVG and PNG Filter for <b>#C9A84C</b></p>
+
+  <div class="comparison_container">
+    
+    <div class="item">
+      <div class="icon_box">
+        <!-- Reference SVG -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <div class="label">Inline SVG (#C9A84C)</div>
+    </div>
+
+    <div class="item">
+      <div class="icon_box">
+        <!-- PNG with CSS Filter -->
+        <img src="//ecimg.cafe24img.com/pg2383b21973322017/daesan3833/web/upload/free_design/search_btn_icon.png" alt="검색하기" class="ds-magnifier-test">
+      </div>
+      <div class="label">PNG + CSS Filter</div>
+    </div>
+
+  </div>
+
+  <div style="text-align: center;">
+    <div class="color_swatch"></div>
+    <div class="swatch_label">#C9A84C (Reference)</div>
+  </div>
+
+  <script>
+    // Verify no console errors
+    console.log("Gold Filter Verification Page Loaded.");
+  </script>
+
+</body>
+</html>

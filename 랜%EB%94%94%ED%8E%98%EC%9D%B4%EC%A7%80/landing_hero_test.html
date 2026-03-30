@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daesan Final Hero Section Test - Round 2</title>
+  <!-- Pretendard CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    /* Reset & Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif; background: #fff; line-height: 1.4; overflow-x: hidden; }
+
+    /* Final Section Structure: section#vanta-birds-bg */
+    #vanta-birds-bg {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* New Canvas Style: ds-kw-canvas */
+    #ds-kw-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0; /* Agency requirement: z-index 0 */
+    }
+
+    .main_visual_area {
+      position: relative;
+      z-index: 1; /* Content above canvas */
+      text-align: center;
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 20px;
+    }
+
+    /* Typography - Strict 실측값 (Pretendard 60px/900 for Titles, 14px/700 for Text) */
+    .section_title { margin-bottom: 50px; }
+    
+    .tit {
+      font-size: 60px;
+      font-weight: 900;
+      color: #123628;
+      margin-bottom: 2px;
+      letter-spacing: -2px;
+    }
+
+    .eng {
+      font-size: 60px;
+      font-weight: 900;
+      color: #123628;
+      margin-bottom: 24px;
+      /* Remove ® and underline as requested */
+      text-decoration: none;
+      letter-spacing: -1px;
+    }
+
+    .txt {
+      font-size: 14px;
+      font-weight: 700;
+      color: #123628;
+      opacity: 1; /* Explicit opacity 1 */
+      margin-top: 10px;
+    }
+
+    /* Search Module Placeholder (Cafe24 compatible) */
+    fieldset {
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+    input[type="text"] {
+      width: 100%;
+      height: 68px;
+      padding: 0 80px 0 34px;
+      border: 1px solid #123628;
+      border-radius: 40px;
+      font-size: 19px;
+      font-weight: 400;
+      outline: none;
+      background: #fff;
+      transition: box-shadow 0.3s;
+    }
+    input[type="text"]:focus {
+      box-shadow: 0 4px 20px rgba(18, 54, 40, 0.08);
+    }
+    .search_btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: #123628;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.2s;
+    }
+    .search_btn:hover { transform: translateY(-50%) scale(1.05); }
+    
+    /* Search Icon Gold Styling (#C9A84C) */
+    .search_btn svg { width: 24px; height: 24px; }
+
+    /* Main Cate (Banners) - Absolute No Modification to Layout */
+    .main_cate {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 60px;
+    }
+    .main_cate li {
+      background: #f8f9fa;
+      padding: 16px 36px;
+      border-radius: 14px;
+      font-weight: 600;
+      color: #123628;
+      border: 1px solid #e1e4e8;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+  </style>
+</head>
+<body>
+
+<section id="vanta-birds-bg" class="main_section main_visual_section">
+
+  <!-- ds-kw-canvas (신규 배경 애니메이션) -->
+  <canvas id="ds-kw-canvas"></canvas>
+
+  <div class="main_visual_area">
+    <div class="section_title">
+      <div class="tit">건축자재의 쿠팡</div>
+      <div class="eng custom_font">대산</div>
+      <div class="txt">건축자재도 이제 클릭 한 번이면 됩니다</div>
+    </div>
+
+    <!-- Layout_SearchHeader Module -->
+    <div module="Layout_SearchHeader">
+      <fieldset>
+        <legend style="display:none">검색</legend>
+        <!-- Placeholder Updated: 필요하신 자재를 입력하세요 -->
+        <input type="text" placeholder="필요하신 자재를 입력하세요">
+        <button type="button" class="search_btn" id="trigger-suction">
+          <!-- Inline SVG for Gold Color (#C9A84C) -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </fieldset>
+    </div>
+
+    <!-- main_cate (최신단가표보기 / 공지사항) -->
+    <ul class="main_cate">
+      <li>최신단가표보기</li>
+      <li>공지사항</li>
+    </ul>
+  </div>
+
+  <!-- ds-kw-js (신규 애니메이션 로직) -->
+  <script id="ds-kw-js">
+  (function(){
+    const cv   = document.getElementById('ds-kw-canvas');
+    const ctx  = cv.getContext('2d');
+    const sec  = document.getElementById('vanta-birds-bg');
+    const sBtn = document.getElementById('trigger-suction');
+
+    function setSize(){
+      cv.width  = sec.offsetWidth;
+      cv.height = sec.offsetHeight;
+    }
+    setSize();
+    // 캔버스 리사이즈 처리 (window resize event)
+    window.addEventListener('resize', setSize);
+
+    const WORDS = ['합판','각재','석고보드','단열재','MDF','OSB','창호','집성목','코팅합판','방음재','플로링','흡음재','문틀','마루','방화문','목재','보드','텍스','단열','자재'];
+
+    // sCenter Fix: Revised Logic
+    function sCenter() {
+      const sbox = document.querySelector('.search_btn') || document.querySelector('fieldset');
+      const hr = document.getElementById('vanta-birds-bg').getBoundingClientRect();
+      const sr = sbox.getBoundingClientRect();
+      return {
+        x: sr.left - hr.left + sr.width  * 0.5,
+        y: sr.top  - hr.top  + sr.height * 0.5
+      };
+    }
+
+    function mkP(initial){
+      const w=cv.width, h=cv.height;
+      let x,y;
+      if(initial){ x=20+Math.random()*(w-40); y=20+Math.random()*(h-40); }
+      else {
+        const side=Math.floor(Math.random()*4);
+        if(side===0){x=Math.random()*w;y=-30;}
+        else if(side===1){x=w+30;y=Math.random()*h;}
+        else if(side===2){x=Math.random()*w;y=h+30;}
+        else{x=-30;y=Math.random()*h;}
+      }
+
+      const isGold = Math.random() < 0.3;
+      const alpha = 0.055 + Math.random() * 0.065;
+
+      return {
+        word: WORDS[Math.floor(Math.random()*WORDS.length)],
+        x, y,
+        vx: (Math.random()-.5)*.4,
+        vy: (Math.random()-.5)*.4,
+        size: 11 + Math.random()*7,
+        alpha,
+        maxA: alpha,
+        phase: Math.random()*Math.PI*2,
+        amp: 7 + Math.random()*10,
+        dur: 14000 + Math.random()*10000,
+        sucking: false,
+        clicked: false,
+        _oy: 0
+      };
+    }
+
+    let pts = Array.from({length:28},()=>mkP(true));
+    const T0 = performance.now();
+    let globalSucking = false;
+
+    if(sBtn) {
+      sBtn.addEventListener('click', () => {
+        globalSucking = true;
+        pts.forEach(p => { p.clicked = true; p.sucking = true; });
+      });
+    }
+
+    function frame(ts){
+      const elapsed = (ts-T0);
+      ctx.clearRect(0,0,cv.width,cv.height);
+      const sc = sCenter();
+      const autoSuckOn = elapsed > 1600;
+
+      pts.forEach((p,i)=>{
+        if(autoSuckOn && !p.sucking && Math.random() < 0.004) p.sucking = true;
+
+        if(p.sucking){
+          const dx = sc.x - p.x;
+          const dy = sc.y - p.y;
+          const dist = Math.hypot(dx,dy);
+          
+          if(p.clicked) {
+            p.vx += dx * 0.06;
+            p.vy += dy * 0.06;
+            p.vx *= 0.82;
+            p.vy *= 0.82;
+          } else {
+            p.vx += dx * 0.014;
+            p.vy += dy * 0.014;
+            p.vx *= 0.86;
+            p.vy *= 0.86;
+          }
+
+          p.alpha = Math.max(0, p.alpha - 0.008);
+          p.x += p.vx; p.y += p.vy;
+
+          if(dist < 16 || p.alpha <= 0){ pts[i] = mkP(false); return; }
+        } else {
+          const oy = Math.sin(ts/p.dur*Math.PI*2+p.phase)*p.amp;
+          p.y += (oy-p._oy)*0.28; p._oy = oy;
+          p.x += p.vx;
+          p.alpha = Math.min(p.maxA, p.alpha + 0.003);
+          if(p.x < -60 || p.x > cv.width+60 || p.y < -60 || p.y > cv.height+60){ pts[i] = mkP(false); return; }
+        }
+        
+        ctx.save();
+        ctx.font = `900 ${p.size}px 'Pretendard Variable',sans-serif`;
+        const isGold = p.clicked || p.sucking ? Math.random() < 0.5 : Math.random() < 0.3;
+        ctx.fillStyle = p.sucking ? `rgba(201, 168, 76, ${p.alpha})` : (Math.random() < 0.7 ? `rgba(18, 54, 40, ${p.alpha})` : `rgba(201, 168, 76, ${p.alpha})`);
+        
+        ctx.fillText(p.word, p.x, p.y);
+        ctx.restore();
+      });
+
+      if(autoSuckOn || globalSucking){
+        const alphaGlow = Math.min(0.25, (elapsed-1600)*0.0001 + 0.13);
+        const g = ctx.createRadialGradient(sc.x, sc.y, 0, sc.x, sc.y, 100);
+        g.addColorStop(0, `rgba(201,168,76,${alphaGlow})`);
+        g.addColorStop(1, 'rgba(201,168,76,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(sc.x, sc.y, 100, 0, Math.PI*2); ctx.fill();
+      }
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+  </script>
+
+</section>
+
+</body>
+</html>
