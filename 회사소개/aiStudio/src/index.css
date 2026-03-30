@@ -30,6 +30,16 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pulse-dot {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
 
 .gradient-header {
   background: linear-gradient(135deg, #123628 0%, #1A4A35 100%);

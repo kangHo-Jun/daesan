@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { cn } from './lib/utils';
 
 // UI Version Flag
-const UI_VERSION: "v1" | "v2" = "v2";
+const UI_VERSION = 'v2' as 'v1' | 'v2';
 
 
 // Versioned Imports
@@ -16,11 +15,10 @@ const {
   Hero, 
   Philosophy, 
   SupplyChain, 
-  Business, 
   AIInnovation, 
   Partners, 
-  Vision, 
-  Directions 
+  Directions,
+  Footer,
 } = UI;
 
 
@@ -57,9 +55,9 @@ export default function App() {
             {[
               { id: 'hero', label: '홈' },
               { id: 'philosophy', label: '경영 철학' },
-              { id: 'business', label: '사업 영역' },
+              { id: 'supply-chain', label: '공급 시스템' },
               { id: 'ai-innovation', label: 'AI 혁신' },
-              { id: 'vision', label: '미래 비전' },
+              { id: 'partners', label: '파트너십' },
               { id: 'directions', label: '오시는 길' },
             ].map((item) => (
               <li key={item.id}>
@@ -80,33 +78,10 @@ export default function App() {
         <Hero />
         <Philosophy />
         <SupplyChain />
-        <Business />
         <AIInnovation />
         <Partners />
-        <Vision />
         <Directions />
-
-        {/* Footer */}
-        <footer className="py-20 bg-dark text-white/30 text-center border-t border-white/5">
-          <div className="max-w-[1200px] mx-auto px-8">
-            <h2 className="text-white text-2xl font-bold tracking-tighter mb-8">DAESAN WOODLAND</h2>
-            <div className="grid md:grid-cols-3 gap-8 text-xs uppercase tracking-widest mb-12">
-              <div>
-                <h4 className="text-white/60 mb-4">Address</h4>
-                <p>경기도 광주시 초월읍 경충대로 1234-56</p>
-              </div>
-              <div>
-                <h4 className="text-white/60 mb-4">Contact</h4>
-                <p>T. 1588-0000 | F. 031-000-0000</p>
-              </div>
-              <div>
-                <h4 className="text-white/60 mb-4">Legal</h4>
-                <p>사업자등록번호 123-45-67890</p>
-              </div>
-            </div>
-            <p className="text-[10px]">© 2026 DAESAN WOODLAND. ALL RIGHTS RESERVED.</p>
-          </div>
-        </footer>
+        <Footer />
       </main>
     </div>
   );

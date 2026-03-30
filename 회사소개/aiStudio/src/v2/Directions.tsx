@@ -1,81 +1,166 @@
-import React from 'react';
-import { MapPin, Phone, Clock, Mail } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 export default function Directions() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapElementRef = useRef<HTMLDivElement>(null);
+  const infoBarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src =
+      'https://dapi.kakao.com/v2/maps/sdk.js?appkey=2d7a1f292b2843acdf9d63b5c8ba8d5c&libraries=services&autoload=false';
+    script.async = true;
+    script.onload = () => {
+      window.kakao.maps.load(() => {
+        const container = document.getElementById('kakao-map');
+        if (!container) return;
+
+        const position = new window.kakao.maps.LatLng(37.3943, 126.9568);
+        const map = new window.kakao.maps.Map(container, {
+          center: position,
+          level: 3,
+        });
+
+        const marker = new window.kakao.maps.Marker({
+          position,
+          map,
+        });
+
+        const infowindow = new window.kakao.maps.InfoWindow({
+          content:
+            '<div style="padding:8px 14px;font-size:13px;font-weight:700;color:#123628;font-family:Pretendard,sans-serif;">(주)대산</div>',
+        });
+        infowindow.open(map, marker);
+      });
+    };
+    document.head.appendChild(script);
+
+    // GSAP Animations
+    const ctx = gsap.context(() => {
+      // Header
+      gsap.fromTo(headerRef.current,
+        { opacity: 0, y: 20 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8, 
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 80%',
+            once: true,
+          }
+        }
+      );
+
+      // Map
+      gsap.fromTo(mapContainerRef.current,
+        { opacity: 0, scale: 0.98 },
+        { 
+          opacity: 1, 
+          scale: 1, 
+          duration: 1, 
+          delay: 0.2,
+          scrollTrigger: {
+            trigger: mapContainerRef.current,
+            start: 'top 80%',
+            once: true,
+          }
+        }
+      );
+
+      // Info Bar
+      gsap.fromTo(infoBarRef.current,
+        { opacity: 0, y: 10 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8, 
+          delay: 0.4,
+          scrollTrigger: {
+            trigger: infoBarRef.current,
+            start: 'top 90%',
+            once: true,
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => {
+      if (document.head.contains(script)) {
+        document.head.removeChild(script);
+      }
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <section id="directions" className="py-[120px] bg-bg-card">
-      <div className="max-w-[1200px] mx-auto px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Map Placeholder */}
-          <div className="aspect-video lg:aspect-square bg-bg-main rounded-[40px] overflow-hidden border border-border relative group">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.817312373954!2d127.0276197!3d37.5550778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca30000000001%3A0x0!2z64yA7IKw!5e0!3m2!1sko!2skr!4v1710260000000!5m2!1sko!2skr" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-              className="grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
-            />
+    <section 
+      id="directions"
+      ref={sectionRef}
+      className="bg-[#0d2318] py-[48px] px-[32px] overflow-hidden relative w-full"
+    >
+      <div className="max-w-[1240px] mx-auto">
+        {/* Header — 중앙 정렬 */}
+        <div ref={headerRef} className="text-center mb-12">
+          <span className="text-[#C9A84C] text-[12px] font-bold tracking-[0.35em] uppercase mb-4 block">
+            05 · DIRECTIONS
+          </span>
+          <h2 className="text-white text-4xl lg:text-5xl font-[700] mb-4 font-serif" style={{ fontFamily: "'Nanum Myeongjo', serif" }}>
+            찾아오시는 길
+          </h2>
+          <p className="text-white/60 text-[14px]">
+            본사 및 물류센터 안내
+          </p>
+        </div>
+
+        {/* Map Container */}
+        <div ref={mapContainerRef} className="mb-6">
+          <div
+            id="kakao-map"
+            ref={mapElementRef}
+            style={{
+              width: '100%',
+              height: '450px',
+              borderRadius: '10px',
+              border: '1px solid rgba(201,168,76,0.2)',
+              overflow: 'hidden',
+            }}
+          />
+        </div>
+
+        {/* Info Bar — 정보 한 줄 바 */}
+        <div 
+          ref={infoBarRef}
+          className="flex flex-wrap justify-center items-center gap-y-4 gap-x-8 py-[14px] px-[20px] bg-white/[0.04] border border-[#C9A84C]/15 rounded-[8px]"
+        >
+          {/* Address */}
+          <div className="flex items-center gap-2">
+            <span className="text-[#C9A84C] text-[14px]">📍</span>
+            <span className="text-white/70 text-[12px]">경기도 안양시 동안구 관악대로 279</span>
           </div>
-
-          <div>
-            <span className="text-accent text-[11px] font-bold tracking-widest uppercase mb-4 block">Directions</span>
-            <h2 className="text-4xl font-bold text-text-dark mb-12 tracking-tight">찾아오시는 길</h2>
-            
-            <div className="space-y-10">
-              <div className="flex gap-6">
-                <div className="w-12 h-12 bg-bg-main rounded-2xl flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5 text-text-dark" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">본사 및 물류센터</h4>
-                  <p className="text-text-gray text-sm leading-relaxed">
-                    경기도 광주시 초월읍 경충대로 1234-56<br />
-                    대산 우드랜드 통합 물류 센터
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="w-12 h-12 bg-bg-main rounded-2xl flex items-center justify-center shrink-0">
-                  <Phone className="w-5 h-5 text-text-dark" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">대표 번호</h4>
-                  <p className="text-text-gray text-sm leading-relaxed">
-                    1588-0000 (평일 08:00 - 18:00)
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="w-12 h-12 bg-bg-main rounded-2xl flex items-center justify-center shrink-0">
-                  <Clock className="w-5 h-5 text-text-dark" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">영업 시간</h4>
-                  <p className="text-text-gray text-sm leading-relaxed">
-                    평일: 07:30 - 18:00<br />
-                    토요일: 07:30 - 15:00 (일요일 휴무)
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="w-12 h-12 bg-bg-main rounded-2xl flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5 text-text-dark" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-text-dark mb-2">이메일 문의</h4>
-                  <p className="text-text-gray text-sm leading-relaxed">
-                    contact@daesanwood.com
-                  </p>
-                </div>
-              </div>
-
-            </div>
+          <div className="hidden md:block w-[1px] h-[12px] bg-white/10" />
+          {/* Phone */}
+          <div className="flex items-center gap-2">
+            <span className="text-[#C9A84C] text-[14px]">☎</span>
+            <span className="text-white/70 text-[12px]">031-388-3833</span>
+          </div>
+          <div className="hidden md:block w-[1px] h-[12px] bg-white/10" />
+          {/* Email */}
+          <div className="flex items-center gap-2">
+            <span className="text-[#C9A84C] text-[14px]">✉</span>
+            <span className="text-white/70 text-[12px]">ds-cjh@daesan.biz</span>
           </div>
         </div>
       </div>

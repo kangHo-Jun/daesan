@@ -1,98 +1,227 @@
-import React from 'react';
-import { ChevronDown, TreeDeciduous, Layers, Layout, DoorOpen } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { X } from 'lucide-react';
 
-const STEPS = [
-  { 
-    title: 'WOOD', 
-    desc: '구조재 / 내장재', 
-    icon: <TreeDeciduous className="w-6 h-6" />,
-    color: 'from-accent/20 to-primary/40'
-  },
-  { 
-    title: 'INSULATION', 
-    desc: '단열재 / 방수재', 
-    icon: <Layers className="w-6 h-6" />,
-    color: 'from-accent/15 to-primary/30'
-  },
-  { 
-    title: 'WINDOW', 
-    desc: '시스템 창호', 
-    icon: <Layout className="w-6 h-6" />,
-    color: 'from-accent/10 to-primary/20'
-  },
-  { 
-    title: 'DOOR', 
-    desc: '내외장 도어', 
-    icon: <DoorOpen className="w-6 h-6" />,
-    color: 'from-accent/5 to-primary/10'
-  },
-];
+gsap.registerPlugin(ScrollTrigger);
 
+const THUMBNAIL_URL = 'https://tv.naver.com/embed/96658718';
+const MODAL_VIDEO_URL = 'https://www.youtube.com/embed/tJ_8JRkG3JI';
 
 export default function SupplyChain() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState('');
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const thumbnailRef = useRef<HTMLButtonElement>(null);
+  const modalBackdropRef = useRef<HTMLDivElement>(null);
+  const modalDialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        [headerRef.current, thumbnailRef.current],
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'power2.out',
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        },
+      );
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      return;
+    }
+
+    const autoplayTimer = window.setTimeout(() => {
+      setIframeSrc(`${MODAL_VIDEO_URL}?autoplay=1&mute=1`);
+    }, 1000);
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    document.body.style.overflow = 'hidden';
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      gsap.set([modalBackdropRef.current, modalDialogRef.current], { clearProps: 'all' });
+    } else {
+      gsap.set(modalBackdropRef.current, { opacity: 0 });
+      gsap.set(modalDialogRef.current, { opacity: 0, scale: 0.95 });
+
+      gsap.to(modalBackdropRef.current, {
+        opacity: 1,
+        duration: 0.25,
+        ease: 'power2.out',
+      });
+
+      gsap.to(modalDialogRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.25,
+        ease: 'power2.out',
+      });
+    }
+
+    return () => {
+      window.clearTimeout(autoplayTimer);
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [isModalOpen]);
+
+  const openModal = () => {
+    setIframeSrc('');
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || !modalBackdropRef.current || !modalDialogRef.current) {
+      setIframeSrc('');
+      setIsModalOpen(false);
+      return;
+    }
+
+    gsap.to(modalDialogRef.current, {
+      opacity: 0,
+      scale: 0.98,
+      duration: 0.2,
+      ease: 'power2.in',
+    });
+
+    gsap.to(modalBackdropRef.current, {
+      opacity: 0,
+      duration: 0.2,
+      ease: 'power2.in',
+      onComplete: () => {
+        setIframeSrc('');
+        setIsModalOpen(false);
+      },
+    });
+  };
+
   return (
-    <section className="py-[120px] bg-primary text-bg-card overflow-hidden relative">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-accent/5 to-transparent pointer-events-none" />
-      
-      <div className="max-w-[1200px] mx-auto px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div>
-            <span className="text-accent text-[11px] font-bold tracking-widest uppercase mb-4 block">Supply Chain</span>
-            <h2 className="text-4xl lg:text-6xl font-bold leading-tight mb-8 tracking-tight">
-              한 번의 발주로<br />
-              <span className="text-accent">모든 자재 공급</span>
+    <>
+      <section
+        id="supply-chain"
+        ref={sectionRef}
+        className="relative overflow-hidden bg-[#0d2318] px-8 py-[120px]"
+      >
+        <div className="mx-auto max-w-[1200px]">
+          <div ref={headerRef} className="mx-auto mb-16 max-w-3xl text-center">
+            <span className="mb-6 block text-[10px] font-bold uppercase tracking-[0.35em] text-[#C9A84C]">
+              02 · SUPPLY CHAIN
+            </span>
+            <h2 className="mb-6 font-serif text-4xl font-[800] leading-tight tracking-tight text-white lg:text-5xl">
+              대산의 원스톱 공급 시스템
             </h2>
-            <p className="text-bg-card/60 text-lg leading-relaxed max-w-md mb-8">
-              대산의 통합 물류 시스템은 기초 자재부터 마감재까지 
-              건축에 필요한 모든 요소를 원스톱으로 연결합니다.
+            <p className="text-[14px] leading-relaxed tracking-wide text-white/45">
+              기초부터 마감까지, 한 번의 발주로 해결합니다
             </p>
-            <div className="flex items-center gap-4 p-6 bg-bg-card/5 border border-bg-card/10 rounded-2xl">
-              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent">
-                <ChevronDown className="w-6 h-6 animate-bounce" />
-              </div>
-              <p className="text-sm text-bg-card/40">스크롤하여 공급망의 흐름을 확인하세요</p>
-            </div>
           </div>
 
-          <div className="relative">
-            {/* Connecting Line Animation */}
-            <div className="absolute left-[47px] top-10 bottom-10 w-[2px] bg-gradient-to-b from-accent/50 via-accent to-accent/50 hidden md:block" />
-            
-            <div className="space-y-6 relative">
-              {STEPS.map((step, idx) => (
-                <div 
-                  key={idx}
-                  className="group relative"
-                >
-                  <div className="bg-bg-card/5 border border-bg-card/10 p-6 md:p-8 rounded-2xl flex items-center gap-6 group hover:bg-bg-card/10 hover:border-accent/50 transition-all duration-500 relative overflow-hidden">
-                    {/* Hover Gradient Background */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                    
-                    {/* Icon Container */}
-                    <div className="relative z-10 w-14 h-14 md:w-16 md:h-16 rounded-xl bg-primary border border-bg-card/10 flex items-center justify-center text-accent group-hover:scale-110 group-hover:bg-accent group-hover:text-primary transition-all duration-500 shadow-xl">
-                      {step.icon}
-                    </div>
+          <button
+            ref={thumbnailRef}
+            type="button"
+            onClick={openModal}
+            aria-label="네이버TV 공급 시스템 영상 재생"
+            className="group relative mx-auto block w-full max-w-[980px] cursor-pointer overflow-hidden rounded-[18px] border border-white/10 bg-black text-left shadow-[0_30px_80px_rgba(0,0,0,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d2318]"
+          >
+            <div className="pointer-events-none relative aspect-video w-full overflow-hidden bg-[#12291d]">
+              <iframe
+                title="대산 공급 시스템 영상 썸네일"
+                src={`${THUMBNAIL_URL}?autoPlay=false&mute=true`}
+                className="absolute inset-0 h-full w-full scale-[1.02]"
+                loading="lazy"
+                tabIndex={-1}
+              />
 
-                    <div className="relative z-10 flex-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-xl md:text-2xl font-bold tracking-tighter transition-colors">{step.title}</h4>
-                        <span className="text-3xl font-black opacity-10 group-hover:opacity-30 transition-opacity">0{idx + 1}</span>
-                      </div>
-                      <p className="text-bg-card/40 text-sm mt-1 transition-colors group-hover:text-bg-card/70">{step.desc}</p>
-                    </div>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,35,24,0.12)_0%,rgba(13,35,24,0)_54%,rgba(13,35,24,0.6)_100%)]" />
 
-                    {/* Decorative Arrow on Hover */}
-                    <div className="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ChevronDown className="w-5 h-5 -rotate-90 text-accent" />
-                    </div>
-                  </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[rgba(201,168,76,0.9)] shadow-[0_12px_35px_rgba(201,168,76,0.25)] transition-transform duration-300 group-hover:scale-110">
+                  <div className="ml-1 h-0 w-0 border-y-[11px] border-y-transparent border-l-[18px] border-l-white" />
                 </div>
-              ))}
+              </div>
+
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 px-6 pb-6 pt-16">
+                <div>
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C9A84C]">
+                    Naver TV
+                  </p>
+                  <p className="font-serif text-2xl font-[800] tracking-tight text-white md:text-3xl">
+                    대산 공급 시스템 영상 보기
+                  </p>
+                </div>
+                <span className="hidden rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-sm md:inline-flex">
+                  Click To Play
+                </span>
+              </div>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      {isModalOpen && (
+        <div
+          ref={modalBackdropRef}
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(0,0,0,0.85)] px-4 py-10"
+          role="dialog"
+          aria-modal="true"
+          aria-label="대산 공급 시스템 영상"
+        >
+          <div
+            ref={modalDialogRef}
+            className="relative w-full max-w-[860px]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={closeModal}
+              aria-label="영상 닫기"
+              className="absolute -top-12 right-0 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-colors duration-200 hover:text-[#C9A84C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C]"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="aspect-video w-full overflow-hidden rounded-[8px] bg-black shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
+              <iframe
+                title="대산 공급 시스템 네이버TV 영상"
+                src={iframeSrc}
+                className="h-full w-full"
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      )}
+    </>
   );
 }

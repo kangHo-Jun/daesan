@@ -4,9 +4,9 @@ import { cn } from '@/src/lib/utils';
 const MENU_ITEMS = [
   { id: 'hero', label: '홈' },
   { id: 'philosophy', label: '경영 철학' },
-  { id: 'business', label: '사업 영역' },
+  { id: 'supply-chain', label: '공급 시스템' },
   { id: 'ai-innovation', label: 'AI 혁신' },
-  { id: 'vision', label: '미래 비전' },
+  { id: 'partners', label: '파트너십' },
   { id: 'directions', label: '오시는 길' },
 ];
 

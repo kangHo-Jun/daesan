@@ -25,7 +25,7 @@ export default function Vision() {
   return (
     <section id="vision" className="py-[160px] bg-primary text-bg-card text-center">
       <div className="max-w-[1200px] mx-auto px-8">
-        <span className="text-accent text-[11px] font-bold tracking-widest uppercase mb-8 block">Our Vision</span>
+        <span className="text-accent text-[10px] font-bold tracking-[0.35em] uppercase mb-8 block">05 · VISION</span>
         <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tighter mb-12">
           건축 자재 업계의 쿠팡<br />
           <span className="relative inline-block">
