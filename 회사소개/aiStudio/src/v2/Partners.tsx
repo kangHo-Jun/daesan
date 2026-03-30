@@ -34,18 +34,18 @@ const PERFORMANCE_CARDS = [
     desc: '석고보드 전 라인 공급. 신축 현장 기준 연간 안정적 납품 유지',
     stats: [
       { label: '연속 납품', value: '3년+' },
-      { label: '납품 현장', value: '100+' }
-    ]
+      { label: '납품 현장', value: '100+' },
+    ],
   },
   {
     logoName: 'LX Z:IN',
     tag: '공식 대리점',
     title: 'LX 완성창호·도어·PF보드 공식 대리점',
-    desc: '완성창호 / 도어 / PF보드 전 제품 직거래 단가 제공',
+    desc: '완성창호 · 도어 · PF보드 전 제품 직거래 단가 제공',
     stats: [
       { label: '단가 제공', value: '직거래' },
-      { label: '제품군 취급', value: '3개' }
-    ]
+      { label: '제품군 취급', value: '3개' },
+    ],
   },
   {
     logoName: '영림몰딩도어',
@@ -54,9 +54,9 @@ const PERFORMANCE_CARDS = [
     desc: '도어·몰딩 전 제품 취급. 공식 대리점으로 최저 단가 보장',
     stats: [
       { label: '제품 취급', value: '전 라인' },
-      { label: '단가 보장', value: '최저가' }
-    ]
-  }
+      { label: '단가 보장', value: '최저가' },
+    ],
+  },
 ];
 
 export default function Partners() {
@@ -66,14 +66,13 @@ export default function Partners() {
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
   const row1Anim = useRef<gsap.core.Tween | null>(null);
   const row2Anim = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Header Animation
-      gsap.fromTo(headerRef.current,
+      gsap.fromTo(
+        headerRef.current,
         { opacity: 0, y: 20 },
         {
           opacity: 1,
@@ -84,12 +83,12 @@ export default function Partners() {
             trigger: sectionRef.current,
             start: 'top 80%',
             once: true,
-          }
-        }
+          },
+        },
       );
 
-      // 2. Slider Entry Animation
-      gsap.fromTo(sliderRef.current,
+      gsap.fromTo(
+        sliderRef.current,
         { opacity: 0 },
         {
           opacity: 1,
@@ -98,11 +97,10 @@ export default function Partners() {
             trigger: sliderRef.current,
             start: 'top 85%',
             once: true,
-          }
-        }
+          },
+        },
       );
 
-      // 3. Infinite Sliding Animation (GSAP)
       if (row1Ref.current) {
         row1Anim.current = gsap.to(row1Ref.current, {
           xPercent: -50,
@@ -118,14 +116,14 @@ export default function Partners() {
           repeat: -1,
           duration: 25,
           ease: 'none',
-          startAt: { xPercent: -50 }
+          startAt: { xPercent: -50 },
         });
       }
 
-      // 4. Cards Staggered Animation
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
-        gsap.fromTo(card,
+        gsap.fromTo(
+          card,
           { opacity: 0, y: 30 },
           {
             opacity: 1,
@@ -137,8 +135,8 @@ export default function Partners() {
               trigger: card,
               start: 'top 90%',
               once: true,
-            }
-          }
+            },
+          },
         );
       });
     }, sectionRef);
@@ -157,106 +155,69 @@ export default function Partners() {
   };
 
   return (
-    <section 
-      id="partners"
-      ref={sectionRef}
-      className="bg-[#0d2318] py-[56px] px-[40px] overflow-hidden relative"
-    >
-      <div className="max-w-[1240px] mx-auto">
-        {/* Header */}
-        <div ref={headerRef} className="text-center mb-16">
-          <span className="text-[#C9A84C] text-[10px] font-bold tracking-[0.35em] uppercase mb-4 block">
-            04 · PARTNERS
-          </span>
-          <h2 className="text-white text-4xl lg:text-5xl font-[800] leading-tight mb-6 font-serif tracking-tight">
+    <section id="partners" ref={sectionRef} className="relative overflow-hidden bg-[#f5f0e8] px-[40px] py-[80px]">
+      <div className="mx-auto max-w-[1100px]">
+        <div ref={headerRef} className="mb-14 text-center">
+          <h2 className="mb-5 font-[700] leading-[1.3] tracking-tight text-[#1a3a28]" style={{ fontFamily: "'Nanum Myeongjo', serif", fontSize: '38px' }}>
             신뢰가 증명하는 파트너십
           </h2>
-          <p className="text-white/40 text-[13px] leading-relaxed tracking-wide">
+          <p className="text-[16px] font-normal leading-[1.75] text-[rgba(26,58,40,0.6)]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
             대한민국 대표 건자재 브랜드와 함께합니다
           </p>
         </div>
 
-        {/* Infinite Logo Slider */}
-        <div ref={sliderRef} className="relative mb-20 overflow-hidden">
-          {/* Side Fades */}
-          <div className="absolute inset-y-0 left-0 w-[120px] bg-gradient-to-r from-[#0d2318] to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-[120px] bg-gradient-to-l from-[#0d2318] to-transparent z-10 pointer-events-none" />
+        <div ref={sliderRef} className="relative mb-16 overflow-hidden">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[120px] bg-gradient-to-r from-[#f5f0e8] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[120px] bg-gradient-to-l from-[#f5f0e8] to-transparent" />
 
-          {/* Row 1: Right to Left (GSAP) */}
-          <div 
-            className="flex mb-6 cursor-pointer"
-            onMouseEnter={() => handleMouseEnter(1)}
-            onMouseLeave={() => handleMouseLeave(1)}
-          >
+          <div className="mb-6 flex cursor-pointer" onMouseEnter={() => handleMouseEnter(1)} onMouseLeave={() => handleMouseLeave(1)}>
             <div ref={row1Ref} className="flex whitespace-nowrap">
               {[...LOGOS_ROW_1, ...LOGOS_ROW_1].map((logo, i) => (
-                <div 
+                <div
                   key={i}
-                  className="w-[160px] h-[60px] bg-white/90 border border-white/10 rounded-[8px] mx-[12px] flex items-center justify-center shrink-0 transition-all hover:bg-white hover:border-[#C9A84C]/30"
+                  className="mx-[12px] flex h-[60px] w-[160px] shrink-0 items-center justify-center rounded-[8px] border border-[#1a3a28]/10 bg-white transition-colors hover:border-[#C9A84C]/40"
                 >
-                  <img 
-                    src={logo.src} 
-                    alt={logo.name} 
-                    className="max-h-[36px] object-contain opacity-[0.85] hover:opacity-100 transition-opacity"
-                  />
+                  <img src={logo.src} alt={logo.name} className="max-h-[36px] object-contain opacity-[0.85] transition-opacity hover:opacity-100" />
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Row 2: Left to Right (GSAP) */}
-          <div 
-            className="flex cursor-pointer"
-            onMouseEnter={() => handleMouseEnter(2)}
-            onMouseLeave={() => handleMouseLeave(2)}
-          >
+          <div className="flex cursor-pointer" onMouseEnter={() => handleMouseEnter(2)} onMouseLeave={() => handleMouseLeave(2)}>
             <div ref={row2Ref} className="flex whitespace-nowrap">
               {[...LOGOS_ROW_2, ...LOGOS_ROW_2].map((logo, i) => (
-                <div 
+                <div
                   key={i}
-                  className="w-[160px] h-[60px] bg-white/90 border border-white/10 rounded-[8px] mx-[12px] flex items-center justify-center shrink-0 transition-all hover:bg-white hover:border-[#C9A84C]/30"
+                  className="mx-[12px] flex h-[60px] w-[160px] shrink-0 items-center justify-center rounded-[8px] border border-[#1a3a28]/10 bg-white transition-colors hover:border-[#C9A84C]/40"
                 >
-                  <img 
-                    src={logo.src} 
-                    alt={logo.name} 
-                    className="max-h-[36px] object-contain opacity-[0.85] hover:opacity-100 transition-opacity"
-                  />
+                  <img src={logo.src} alt={logo.name} className="max-h-[36px] object-contain opacity-[0.85] transition-opacity hover:opacity-100" />
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Performance Cards */}
-        <div className="grid md:grid-cols-3 gap-[14px] mb-20">
+        <div className="mb-14 grid gap-[14px] md:grid-cols-3">
           {PERFORMANCE_CARDS.map((card, i) => (
-            <div 
+            <div
               key={i}
-              ref={el => { cardsRef.current[i] = el; }}
-              className="bg-white/5 border border-[#C9A84C]/20 rounded-[10px] p-5 transition-all duration-300 hover:border-[#C9A84C] hover:-translate-y-1"
+              ref={(el) => {
+                cardsRef.current[i] = el;
+              }}
+              className="rounded-[10px] border border-[#1a3a28]/10 bg-white p-5 transition-colors duration-300 hover:border-[#C9A84C]/50"
             >
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-white/60 text-[11px] font-bold">{card.logoName}</span>
-                <span className="bg-[#C9A84C]/10 text-[#C9A84C] text-[9px] font-bold px-2 py-0.5 rounded-full">
-                  {card.tag}
-                </span>
+              <div className="mb-4 flex items-center justify-between">
+                <span className="text-[11px] font-bold text-[rgba(26,58,40,0.62)]">{card.logoName}</span>
+                <span className="rounded-full bg-[#C9A84C]/10 px-2 py-0.5 text-[9px] font-bold text-[#C9A84C]">{card.tag}</span>
               </div>
-              <h3 className="text-white text-[16px] font-[800] mb-2 leading-tight tracking-tight">
-                {card.title}
-              </h3>
-              <p className="text-white/40 text-[12px] leading-relaxed mb-6 font-medium">
-                {card.desc}
-              </p>
-              
-              <div className="pt-4 border-t border-white/5 flex gap-4">
+              <h3 className="mb-2 text-[20px] font-[700] tracking-tight text-[#1a3a28]" style={{ fontFamily: 'Pretendard, sans-serif' }}>{card.title}</h3>
+              <p className="mb-6 text-[15px] font-normal leading-[1.7] text-[rgba(26,58,40,0.62)]" style={{ fontFamily: 'Pretendard, sans-serif' }}>{card.desc}</p>
+
+              <div className="flex gap-4 border-t border-[#1a3a28]/10 pt-4">
                 {card.stats.map((stat, si) => (
                   <div key={si} className="flex flex-col">
-                    <span className="text-[#C9A84C] text-[15px] font-[800]">
-                      {stat.value}
-                    </span>
-                    <span className="text-white/30 text-[9px] font-bold uppercase tracking-wider">
-                      {stat.label}
-                    </span>
+                    <span className="text-[15px] font-[800] text-[#C9A84C]">{stat.value}</span>
+                    <span className="text-[9px] font-bold tracking-[0.14em] text-[rgba(26,58,40,0.5)]">{stat.label}</span>
                   </div>
                 ))}
               </div>
@@ -264,16 +225,6 @@ export default function Partners() {
           ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-white/5 pt-12 text-center">
-          <div className="flex items-center justify-center gap-6">
-            <div className="h-[0.5px] w-16 bg-[#C9A84C]/20" />
-            <p className="text-white/30 text-[11px] font-medium tracking-tight">
-              <span className="text-[#C9A84C]">대산</span>은 대한민국 건자재 유통 업계 최초로 AI를 도입했습니다
-            </p>
-            <div className="h-[0.5px] w-16 bg-[#C9A84C]/20" />
-          </div>
-        </div>
       </div>
     </section>
   );

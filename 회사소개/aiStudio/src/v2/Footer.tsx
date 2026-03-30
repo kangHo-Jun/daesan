@@ -17,7 +17,7 @@ const addresses = [
 export default function Footer() {
   return (
     <footer className="bg-[#0a1a10] border-t border-[#C9A84C]">
-      <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr] gap-10 px-6 py-10 md:px-10 md:pb-8">
+      <div className="grid grid-cols-1 gap-10 px-[40px] py-10 lg:grid-cols-[1.4fr_1fr_1fr]">
         <div className="space-y-5">
           <h2 className="text-[20px] font-extrabold tracking-[-0.04em] text-white">
             대산<span className="text-[#C9A84C]">우드랜드</span>
@@ -82,7 +82,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 bg-[#060f08] px-6 py-4 text-[10px] md:flex-row md:items-center md:justify-between md:px-10">
+      <div className="flex flex-col gap-3 bg-[#060f08] px-[40px] py-4 text-[10px] md:flex-row md:items-center md:justify-between">
         <p className="text-white/25">
           <span className="text-white/35">주식회사 대산</span> · 대표 손장범 · 사업자등록번호 138-81-10613
         </p>

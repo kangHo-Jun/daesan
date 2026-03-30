@@ -7,28 +7,28 @@ gsap.registerPlugin(ScrollTrigger);
 // ─────────────────────────────────────────────
 // Browser Top Bar
 // ─────────────────────────────────────────────
-const BrowserBar = ({ url }: { url?: string }) => (
+const BrowserBar = ({ label }: { label?: string }) => (
   <div style={{
     display: 'flex', alignItems: 'center', gap: 6,
     padding: '6px 10px',
-    background: '#141414',
-    borderBottom: '1px solid #222'
+    background: '#f5f0e8',
+    borderBottom: '1px solid rgba(26,58,40,0.1)'
   }}>
     <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
       <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#ff5f57' }} />
       <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#febc2e' }} />
       <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#28c840' }} />
     </div>
-    {url && (
+    {label && (
       <div style={{
-        flex: 1, background: '#242424', borderRadius: 4,
+        flex: 1, background: 'rgba(26,58,40,0.06)', borderRadius: 4,
         padding: '2px 8px', overflow: 'hidden'
       }}>
         <span style={{
-          fontSize: '7px', color: '#666', fontFamily: 'monospace',
+          fontSize: '7px', color: 'rgba(26,58,40,0.6)', fontFamily: 'sans-serif',
           whiteSpace: 'nowrap', display: 'block',
           overflow: 'hidden', textOverflow: 'ellipsis'
-        }}>{url}</span>
+        }}>{label}</span>
       </div>
     )}
   </div>
@@ -533,6 +533,7 @@ const CARD_DEFS = [
     title: '실시간 단가표',
     desc: '시장 변동 즉시 반영. 업계 최초 실시간 단가 공개',
     url: 'https://web-cadalog-ver10.vercel.app/price',
+    browserLabel: '실시간 단가표 서비스',
     Preview: PriceTablePreview,
   },
   {
@@ -540,6 +541,7 @@ const CARD_DEFS = [
     title: 'AI 웹 카탈로그',
     desc: '전 제품 실시간 검색 · 견적 · 발주 원스톱',
     url: 'https://web-cadalog-ver10.vercel.app/',
+    browserLabel: 'AI 웹 카탈로그',
     Preview: CatalogPreview,
   },
   {
@@ -547,6 +549,7 @@ const CARD_DEFS = [
     title: '재단도면 그리기',
     desc: 'AI 최적 절단 배치로 자재 낭비 최소화',
     url: 'https://kangho-jun.github.io/woodcutter_v4/',
+    browserLabel: '재단도면 그리기',
     Preview: DiagramPreview,
   },
   {
@@ -554,6 +557,7 @@ const CARD_DEFS = [
     title: 'AI 도어 견적 자동화',
     desc: '사양 입력 → 8초 만에 완성 견적 자동 출력',
     url: null,
+    browserLabel: 'AI 도어 견적 자동화',
     Preview: DoorEstimatePreview,
   },
 ] as const;
@@ -609,47 +613,33 @@ export default function AIInnovation() {
     <section
       id="ai-innovation"
       ref={sectionRef}
-      className="bg-[#0d2318] py-[120px] px-8 lg:px-[40px] overflow-hidden"
+      className="overflow-hidden bg-[#f5f0e8] px-[40px] py-[80px]"
     >
-      <div className="max-w-[1240px] mx-auto">
+      <div className="mx-auto max-w-[1100px]">
 
-        {/* ── Section Header ── */}
-        <div ref={headerRef} className="text-center mb-20">
-          <span className="text-[#C9A84C] text-[10px] font-bold tracking-[0.35em] uppercase mb-6 block">
-            03 · AI INNOVATION
-          </span>
-          <div className="inline-flex items-center gap-2.5 mb-8 px-5 py-2 rounded-full bg-[#C9A84C]/12 border border-[#C9A84C]/40">
-            <div className="w-1.5 h-1.5 bg-[#C9A84C] rounded-full animate-pulse-dot" />
-            <span className="text-[#C9A84C] text-[10px] font-bold tracking-[0.15em]">INDUSTRY FIRST</span>
-          </div>
-          <h2 className="text-white text-4xl lg:text-5xl font-[800] leading-tight mb-8 font-serif tracking-tight">
-            대한민국 건자재 유통<br />
-            <span className="text-[#C9A84C]">AI를 입히다</span>
+        <div ref={headerRef} className="mb-16 text-center">
+          <h2 className="mb-5 font-[700] leading-[1.3] tracking-tight text-[#1a3a28]" style={{ fontFamily: "'Nanum Myeongjo', serif", fontSize: '38px' }}>
+            대한민국 건자재 유통에 AI를 입히다
           </h2>
-          <p className="text-white/40 text-[13px] leading-relaxed tracking-wide max-w-xl mx-auto">
-            35년 현장 데이터 + AI 기술 — 유통의 패러다임을 바꿉니다
+          <p className="mx-auto max-w-xl text-[16px] font-normal leading-[1.75] text-[rgba(26,58,40,0.6)]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
+            35년 현장 데이터 + AI 기술로 유통의 패러다임을 바꿉니다
           </p>
         </div>
 
-        {/* ── Card Grid ── */}
-        <div className="grid md:grid-cols-2 gap-5 max-w-[860px] mx-auto mb-20">
+        <div className="mx-auto mb-16 grid max-w-[860px] gap-5 md:grid-cols-2">
           {CARD_DEFS.map((card, i) => (
             <div
               key={card.id}
               ref={el => { cardsRef.current[i] = el; }}
-              className="group bg-[#0a1a10] border border-[#C9A84C]/20 rounded-[12px] overflow-hidden transition-all duration-500 hover:border-[#C9A84C]/70 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(201,168,76,0.12)]"
+              className="group overflow-hidden rounded-[12px] border border-[#1a3a28]/10 bg-white transition-colors duration-300 hover:border-[#C9A84C]/50"
             >
-              {/* Browser top bar */}
-              <BrowserBar url={card.url ?? undefined} />
+              <BrowserBar label={card.browserLabel} />
 
-              {/* Preview area */}
               <div className="relative" style={{ height: 220, overflow: 'hidden' }}>
                 <card.Preview />
 
-                {/* Hover overlay — link */}
                 {card.url && (
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(2px)' }}>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: 'rgba(26,58,40,0.45)' }}>
                     <a
                       href={card.url}
                       target="_blank"
@@ -670,29 +660,16 @@ export default function AIInnovation() {
                 )}
               </div>
 
-              {/* Card bottom info */}
-              <div className="px-5 py-4 border-t border-[#C9A84C]/10">
-                <div className="flex items-center gap-2.5 mb-1.5">
+              <div className="border-t border-[#1a3a28]/10 px-5 py-4">
+                <div className="mb-1.5 flex items-center gap-2.5">
                   <span className="text-[#C9A84C]/35 text-[10px] font-[800] tabular-nums">{card.id}</span>
-                  <h3 className="text-white text-[14px] font-[800] tracking-tight">{card.title}</h3>
+                  <h3 className="text-[20px] font-[700] tracking-tight text-[#1a3a28]" style={{ fontFamily: 'Pretendard, sans-serif' }}>{card.title}</h3>
                 </div>
-                <p className="text-white/38 text-[11px] leading-[1.6] font-medium">{card.desc}</p>
+                <p className="text-[15px] font-normal leading-[1.7] text-[rgba(26,58,40,0.58)]" style={{ fontFamily: 'Pretendard, sans-serif' }}>{card.desc}</p>
               </div>
             </div>
           ))}
         </div>
-
-        {/* ── Bottom Bar ── */}
-        <div ref={bottomBarRef} className="border-t border-white/5 pt-12 text-center">
-          <div className="flex items-center justify-center gap-6">
-            <div className="h-[0.5px] w-16 bg-[#C9A84C]/20" />
-            <p className="text-white/30 text-[11px] font-medium tracking-tight">
-              <span className="text-[#C9A84C]">대산</span>은 대한민국 건자재 유통 업계 최초로 AI를 도입했습니다
-            </p>
-            <div className="h-[0.5px] w-16 bg-[#C9A84C]/20" />
-          </div>
-        </div>
-
       </div>
     </section>
   );

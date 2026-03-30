@@ -71,7 +71,7 @@ export default function SupplyChain() {
       gsap.set([modalBackdropRef.current, modalDialogRef.current], { clearProps: 'all' });
     } else {
       gsap.set(modalBackdropRef.current, { opacity: 0 });
-      gsap.set(modalDialogRef.current, { opacity: 0, scale: 0.95 });
+      gsap.set(modalDialogRef.current, { opacity: 0, scale: 0.98 });
 
       gsap.to(modalBackdropRef.current, {
         opacity: 1,
@@ -128,20 +128,13 @@ export default function SupplyChain() {
 
   return (
     <>
-      <section
-        id="supply-chain"
-        ref={sectionRef}
-        className="relative overflow-hidden bg-[#0d2318] px-8 py-[120px]"
-      >
-        <div className="mx-auto max-w-[1200px]">
-          <div ref={headerRef} className="mx-auto mb-16 max-w-3xl text-center">
-            <span className="mb-6 block text-[10px] font-bold uppercase tracking-[0.35em] text-[#C9A84C]">
-              02 · SUPPLY CHAIN
-            </span>
-            <h2 className="mb-6 font-serif text-4xl font-[800] leading-tight tracking-tight text-white lg:text-5xl">
-              대산의 원스톱 공급 시스템
+      <section id="supply-chain" ref={sectionRef} className="relative overflow-hidden bg-[#f5f0e8] px-[40px] py-[80px]">
+        <div className="mx-auto max-w-[1100px]">
+          <div ref={headerRef} className="mx-auto mb-14 max-w-3xl text-center">
+            <h2 className="mb-5 font-[700] leading-[1.3] tracking-tight text-[#1a3a28]" style={{ fontFamily: "'Nanum Myeongjo', serif", fontSize: '38px' }}>
+              모든 자재를 한곳에서 한번에 주문
             </h2>
-            <p className="text-[14px] leading-relaxed tracking-wide text-white/45">
+            <p className="text-[16px] font-normal leading-[1.75] text-[rgba(26,58,40,0.6)]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
               기초부터 마감까지, 한 번의 발주로 해결합니다
             </p>
           </div>
@@ -150,37 +143,32 @@ export default function SupplyChain() {
             ref={thumbnailRef}
             type="button"
             onClick={openModal}
-            aria-label="네이버TV 공급 시스템 영상 재생"
-            className="group relative mx-auto block w-full max-w-[980px] cursor-pointer overflow-hidden rounded-[18px] border border-white/10 bg-black text-left shadow-[0_30px_80px_rgba(0,0,0,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d2318]"
+            aria-label="올인원 영상 재생"
+            className="group relative mx-auto block w-full max-w-[1100px] cursor-pointer overflow-hidden rounded-[18px] border border-[#1a3a28]/10 bg-white text-left transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f0e8] hover:border-[#C9A84C]/50"
           >
-            <div className="pointer-events-none relative aspect-video w-full overflow-hidden bg-[#12291d]">
+            <div className="pointer-events-none relative aspect-video w-full overflow-hidden bg-[#e8e0d4]">
               <iframe
-                title="대산 공급 시스템 영상 썸네일"
+                title="올인원 영상 썸네일"
                 src={`${THUMBNAIL_URL}?autoPlay=false&mute=true`}
                 className="absolute inset-0 h-full w-full scale-[1.02]"
                 loading="lazy"
                 tabIndex={-1}
               />
 
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,35,24,0.12)_0%,rgba(13,35,24,0)_54%,rgba(13,35,24,0.6)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(245,240,232,0.1)_0%,rgba(245,240,232,0)_54%,rgba(245,240,232,0.9)_100%)]" />
 
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[rgba(201,168,76,0.9)] shadow-[0_12px_35px_rgba(201,168,76,0.25)] transition-transform duration-300 group-hover:scale-110">
+                <div className="flex h-[68px] w-[68px] items-center justify-center rounded-full bg-[rgba(201,168,76,0.92)] transition-transform duration-300 group-hover:scale-105">
                   <div className="ml-1 h-0 w-0 border-y-[11px] border-y-transparent border-l-[18px] border-l-white" />
                 </div>
               </div>
 
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 px-6 pb-6 pt-16">
                 <div>
-                  <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[#C9A84C]">
-                    Naver TV
-                  </p>
-                  <p className="font-serif text-2xl font-[800] tracking-tight text-white md:text-3xl">
-                    대산 공급 시스템 영상 보기
-                  </p>
+
                 </div>
-                <span className="hidden rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75 backdrop-blur-sm md:inline-flex">
-                  Click To Play
+                <span className="hidden rounded-full border border-[#1a3a28]/10 px-4 py-2 text-[11px] font-semibold text-[rgba(26,58,40,0.68)] md:inline-flex">
+                  영상 재생
                 </span>
               </div>
             </div>
@@ -194,13 +182,10 @@ export default function SupplyChain() {
           className="fixed inset-0 z-[120] flex items-center justify-center bg-[rgba(0,0,0,0.85)] px-4 py-10"
           role="dialog"
           aria-modal="true"
-          aria-label="대산 공급 시스템 영상"
+          aria-label="대산 올인원 서비스 영상"
+          onClick={closeModal}
         >
-          <div
-            ref={modalDialogRef}
-            className="relative w-full max-w-[860px]"
-            onClick={(event) => event.stopPropagation()}
-          >
+          <div ref={modalDialogRef} className="relative w-full max-w-[860px]" onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
               onClick={closeModal}
@@ -210,9 +195,9 @@ export default function SupplyChain() {
               <X className="h-5 w-5" />
             </button>
 
-            <div className="aspect-video w-full overflow-hidden rounded-[8px] bg-black shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
+            <div className="aspect-video w-full overflow-hidden rounded-[8px] bg-black">
               <iframe
-                title="대산 공급 시스템 네이버TV 영상"
+                title="대산 올인원 서비스 영상"
                 src={iframeSrc}
                 className="h-full w-full"
                 allow="autoplay; fullscreen; encrypted-media; picture-in-picture"

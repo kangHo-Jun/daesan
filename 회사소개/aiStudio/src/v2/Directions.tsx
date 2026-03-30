@@ -109,23 +109,18 @@ export default function Directions() {
     <section 
       id="directions"
       ref={sectionRef}
-      className="bg-[#0d2318] py-[48px] px-[32px] overflow-hidden relative w-full"
+      className="relative w-full overflow-hidden bg-[#f5f0e8] px-[40px] py-[80px]"
     >
-      <div className="max-w-[1240px] mx-auto">
-        {/* Header — 중앙 정렬 */}
+      <div className="mx-auto max-w-[1100px]">
         <div ref={headerRef} className="text-center mb-12">
-          <span className="text-[#C9A84C] text-[12px] font-bold tracking-[0.35em] uppercase mb-4 block">
-            05 · DIRECTIONS
-          </span>
-          <h2 className="text-white text-4xl lg:text-5xl font-[700] mb-4 font-serif" style={{ fontFamily: "'Nanum Myeongjo', serif" }}>
+          <h2 className="mb-4 font-[700] leading-[1.3] text-[#1a3a28]" style={{ fontFamily: "'Nanum Myeongjo', serif", fontSize: '38px' }}>
             찾아오시는 길
           </h2>
-          <p className="text-white/60 text-[14px]">
+          <p className="text-[16px] font-normal leading-[1.75] text-[rgba(26,58,40,0.6)]" style={{ fontFamily: 'Pretendard, sans-serif' }}>
             본사 및 물류센터 안내
           </p>
         </div>
 
-        {/* Map Container */}
         <div ref={mapContainerRef} className="mb-6">
           <div
             id="kakao-map"
@@ -140,27 +135,20 @@ export default function Directions() {
           />
         </div>
 
-        {/* Info Bar — 정보 한 줄 바 */}
         <div 
           ref={infoBarRef}
-          className="flex flex-wrap justify-center items-center gap-y-4 gap-x-8 py-[14px] px-[20px] bg-white/[0.04] border border-[#C9A84C]/15 rounded-[8px]"
+          className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 rounded-[8px] border border-[#1a3a28]/10 bg-white px-[20px] py-[14px]"
         >
-          {/* Address */}
           <div className="flex items-center gap-2">
-            <span className="text-[#C9A84C] text-[14px]">📍</span>
-            <span className="text-white/70 text-[12px]">경기도 안양시 동안구 관악대로 279</span>
+            <span className="text-[12px] text-[rgba(26,58,40,0.7)]">경기도 안양시 동안구 관악대로 279</span>
           </div>
-          <div className="hidden md:block w-[1px] h-[12px] bg-white/10" />
-          {/* Phone */}
+          <div className="hidden h-[12px] w-[1px] bg-[#1a3a28]/10 md:block" />
           <div className="flex items-center gap-2">
-            <span className="text-[#C9A84C] text-[14px]">☎</span>
-            <span className="text-white/70 text-[12px]">031-388-3833</span>
+            <span className="text-[12px] text-[rgba(26,58,40,0.7)]">031-388-3833</span>
           </div>
-          <div className="hidden md:block w-[1px] h-[12px] bg-white/10" />
-          {/* Email */}
+          <div className="hidden h-[12px] w-[1px] bg-[#1a3a28]/10 md:block" />
           <div className="flex items-center gap-2">
-            <span className="text-[#C9A84C] text-[14px]">✉</span>
-            <span className="text-white/70 text-[12px]">ds-cjh@daesan.biz</span>
+            <span className="text-[12px] text-[rgba(26,58,40,0.7)]">ds-cjh@daesan.biz</span>
           </div>
         </div>
       </div>
