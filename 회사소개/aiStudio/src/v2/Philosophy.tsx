@@ -103,7 +103,7 @@ export default function Philosophy() {
                 {item.keywordKo}
               </h3>
 
-              <p className={`max-w-[240px] text-[15px] font-normal leading-[1.7] ${item.theme === 'white' ? 'text-[rgba(26,58,40,0.68)]' : 'text-white/75'}`} style={{ fontFamily: 'Pretendard, sans-serif' }}>
+              <p className={`max-w-[240px] break-keep text-[15px] font-normal leading-[1.7] ${item.theme === 'white' ? 'text-[rgba(26,58,40,0.68)]' : 'text-white/75'}`} style={{ fontFamily: 'Pretendard, sans-serif' }}>
                 {item.desc}
               </p>
             </div>
