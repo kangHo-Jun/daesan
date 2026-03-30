@@ -147,7 +147,7 @@ export default function SupplyChain() {
           >
             <div className="pointer-events-none relative aspect-video w-full overflow-hidden bg-[#e8e0d4]">
               <img
-                src="/images/supply-thumbnail.png"
+                src="/daesan/images/supply-thumbnail.png"
                 alt="대산 공급 시스템 영상"
                 className="h-full w-full object-cover"
               />
