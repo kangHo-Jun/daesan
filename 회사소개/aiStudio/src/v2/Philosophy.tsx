@@ -8,7 +8,7 @@ const VALUES = [
   {
     id: '01',
     keywordKo: '신속',
-    desc: '당일·익일 배송 시스템, 현장 일정에 맞춘 즉각 대응',
+    desc: '당일·익일 배송으로, 현장에 즉각 대응',
     theme: 'white',
     gridSpan: 'col-span-1',
   },
@@ -22,14 +22,14 @@ const VALUES = [
   {
     id: '03',
     keywordKo: '품질',
-    desc: '검증된 브랜드 자재만 취급,\n하자 없는 현장 완성',
+    desc: '좋은 품질 자재로 하자 없는 현장 완성',
     theme: 'gold',
     gridSpan: 'col-span-2',
   },
   {
     id: '04',
     keywordKo: '가격',
-    desc: '직거래 기반 합리적 단가,\n투명한 견적 공개',
+    desc: '실시간 기반 투명한 견적 공개',
     theme: 'white',
     gridSpan: 'col-span-1',
   },
