@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대산 — 랜딩 히어로 테스트</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    /* ── 섹션 ── */
+    #vanta-birds-bg {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ── 캔버스 ── */
+    #ds-kw-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── 콘텐츠 영역 ── */
+    .main_visual_area {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    /* ── section_title ── */
+    .section_title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .tit {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 60px;
+      font-weight: 900;
+      color: #123628;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      opacity: 1;
+    }
+
+    .eng {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 60px;
+      font-weight: 900;
+      color: #123628;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      text-decoration: none;
+      border-bottom: none;
+      opacity: 1;
+    }
+
+    .txt {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #123628;
+      opacity: 1;
+      letter-spacing: 0.3px;
+      margin-top: 8px;
+    }
+
+    /* ── 검색창 (테스트용 더미) ── */
+    .search_module {
+      margin-top: 28px;
+      width: min(480px, 85vw);
+    }
+
+    fieldset {
+      border: 1.5px solid rgba(201, 168, 76, 0.55);
+      border-radius: 40px;
+      padding: 0 6px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      box-shadow: 0 2px 20px rgba(18, 54, 40, 0.07);
+      cursor: pointer;
+    }
+
+    fieldset legend {
+      display: none;
+    }
+
+    fieldset .search_icon {
+      flex-shrink: 0;
+      color: #C9A84C;
+      fill: #C9A84C;
+      stroke: #C9A84C;
+    }
+
+    fieldset input[type="text"] {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Pretendard', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #333;
+      padding: 15px 0;
+      background: transparent;
+    }
+
+    fieldset input[type="text"]::placeholder {
+      color: #bbb;
+    }
+
+    /* 검색 버튼 */
+    .search_btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #C9A84C;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      transition: background .2s, transform .2s;
+    }
+
+    .search_btn:hover {
+      background: #d4b55a;
+      transform: scale(1.08);
+    }
+
+    /* PNG 아이콘 골드 필터 (Cafe24 실반영용) */
+    .search_btn img {
+      filter: invert(78%) sepia(34%) saturate(750%) hue-rotate(352deg) brightness(85%) contrast(85%);
+      width: 18px;
+      height: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id="vanta-birds-bg" class="main_section main_visual_section">
+
+    <!-- 키워드 캔버스 -->
+    <canvas id="ds-kw-canvas"></canvas>
+
+    <div class="main_visual_area">
+
+      <!-- 텍스트 -->
+      <div class="section_title">
+        <div class="tit">건축자재의 쿠팡</div>
+        <div class="eng custom_font">대산</div>
+        <div class="txt">건축자재도 이제 클릭 한 번이면 됩니다</div>
+      </div>
+
+      <!-- 검색창 (테스트용 더미 — 실반영 시 Cafe24 모듈로 교체) -->
+      <div class="search_module">
+        <fieldset id="search_fieldset">
+          <legend>검색</legend>
+
+          <!-- 왼쪽 돋보기 (SVG 인라인 — 테스트용) -->
+          <svg class="search_icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C"
+            stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7" />
+            <line x1="16.5" y1="16.5" x2="22" y2="22" />
+          </svg>
+
+          <input type="text" placeholder="필요하신 자재를 입력하세요">
+
+          <!-- 검색 버튼 -->
+          <button class="search_btn" id="search_btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"
+              stroke-linecap="round">
+              <circle cx="11" cy="11" r="7" />
+              <line x1="16.5" y1="16.5" x2="22" y2="22" />
+            </svg>
+          </button>
+        </fieldset>
+      </div>
+
+      <!-- main_cate (절대 수정 금지 — 실반영 시 배너 앱이 렌더링) -->
+      <ul class="main_cate" hidden></ul>
+
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const sec = document.getElementById('vanta-birds-bg');
+      const cv = document.getElementById('ds-kw-canvas');
+      const ctx = cv.getContext('2d');
+      const btn = document.getElementById('search_btn');
+
+      /* 캔버스 크기 */
+      function setSize() {
+        cv.width = sec.offsetWidth;
+        cv.height = sec.offsetHeight;
+      }
+      setSize();
+      window.addEventListener('resize', setSize);
+
+      /* 검색창 중심 좌표 — 캔버스 기준 절대 좌표 */
+      function sCenter() {
+        const secRect = sec.getBoundingClientRect();
+        const fs = document.getElementById('search_fieldset');
+        const fsRect = fs.getBoundingClientRect();
+        return {
+          x: fsRect.left - secRect.left + fsRect.width * 0.5,
+          y: fsRect.top - secRect.top + fsRect.height * 0.5
+        };
+      }
+
+      /* 키워드 */
+      const WORDS = ['합판', '각재', '석고보드', '단열재', 'MDF', 'OSB', '창호', '집성목', '코팅합판', '방음재', '플로링', '흡음재', '문틀', '마루', '방화문', '목재', '보드', '텍스', '단열', '자재'];
+
+      /* 색상: 그린 70% / 골드 30% */
+      const COLORS = [
+        { r: 18, g: 54, b: 40 },
+        { r: 18, g: 54, b: 40 },
+        { r: 201, g: 168, b: 76 },
+      ];
+
+      function mkP(initial) {
+        const w = cv.width, h = cv.height;
+        let x, y;
+        if (initial) {
+          x = 20 + Math.random() * (w - 40);
+          y = 20 + Math.random() * (h - 40);
+        } else {
+          const s = Math.floor(Math.random() * 4);
+          if (s === 0) { x = Math.random() * w; y = -24; }
+          else if (s === 1) { x = w + 24; y = Math.random() * h; }
+          else if (s === 2) { x = Math.random() * w; y = h + 24; }
+          else { x = -24; y = Math.random() * h; }
+        }
+        const c = COLORS[Math.floor(Math.random() * COLORS.length)];
+        return {
+          word: WORDS[Math.floor(Math.random() * WORDS.length)],
+          x, y,
+          vx: (Math.random() - .5) * .4,
+          vy: (Math.random() - .5) * .4,
+          size: 11 + Math.random() * 7,
+          alpha: initial ? Math.random() * 0.08 : 0,
+          maxA: 0.055 + Math.random() * 0.065,
+          phase: Math.random() * Math.PI * 2,
+          amp: 7 + Math.random() * 10,
+          dur: 14 + Math.random() * 10,
+          sucking: false,
+          _oy: 0,
+          cr: c.r, cg: c.g, cb: c.b
+        };
+      }
+
+      let pts = Array.from({ length: 28 }, () => mkP(true));
+      const T0 = performance.now();
+      let t = 0;
+      let suckAllTriggered = false;
+      let glowAlpha = 0;
+
+      /* 검색창 호버 — 전체 흡입 (무한 루프) */
+      const fieldset = document.getElementById('search_fieldset');
+      fieldset.addEventListener('mouseenter', function () {
+        suckAllTriggered = true;
+        pts.forEach(p => { p.sucking = true; });
+      });
+      /* 마우스 떠나면 → 자동 흡입 모드로 복귀 (리셋 없음) */
+      fieldset.addEventListener('mouseleave', function () {
+        suckAllTriggered = false;
+      });
+
+      function frame(ts) {
+        const elapsed = (ts - T0) / 1000;
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        const sc = sCenter();
+
+        /* 글로우 알파 */
+        if (suckAllTriggered) {
+          glowAlpha = Math.min(0.25, glowAlpha + 0.008);
+        } else {
+          const autoOn = elapsed > 1.6;
+          if (autoOn) {
+            glowAlpha = Math.min(0.13, glowAlpha + 0.002);
+            pts.forEach((p, i) => { if (!p.sucking && Math.random() < 0.004) p.sucking = true; });
+          }
+        }
+
+        /* 파티클 업데이트 & 드로우 */
+        pts.forEach((p, i) => {
+          if (p.sucking) {
+            const dx = sc.x - p.x, dy = sc.y - p.y, dist = Math.hypot(dx, dy);
+
+            /* 부드럽게 검색창으로 끌려가는 효과 */
+            /* 가속은 약하게 — 궤적이 보여야 함 */
+            p.vx += dx * 0.008;
+            p.vy += dy * 0.008;
+            p.vx *= 0.92;
+            p.vy *= 0.92;
+
+            /* 검색창 가까워질수록 서서히 작아짐 */
+            const shrink = Math.min(1, dist / 200);
+            p.scale = Math.max(0.1, shrink);
+
+            /* 회전은 천천히 */
+            p.rot = (p.rot || 0) + 0.06;
+
+            /* alpha는 검색창 근처에서만 줄어듦 */
+            if (dist < 80) p.alpha = Math.max(0, p.alpha - 0.02);
+
+            p.x += p.vx; p.y += p.vy;
+
+            if (dist < 12 || p.alpha <= 0) {
+              const np = mkP(false);
+              np.sucking = suckAllTriggered;
+              np.alpha = suckAllTriggered ? 0.06 : 0;
+              pts[i] = np;
+              return;
+            }
+          } else {
+            const oy = Math.sin(t / p.dur * Math.PI * 2 + p.phase) * p.amp;
+            p.y += (oy - p._oy) * 0.28;
+            p._oy = oy;
+            p.x += p.vx;
+            p.rot = 0;
+            p.scale = 1;
+            p.alpha = Math.min(p.maxA, p.alpha + 0.003);
+            if (p.x < -40 || p.x > cv.width + 40 || p.y < -40 || p.y > cv.height + 40) {
+              pts[i] = mkP(false); return;
+            }
+          }
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot || 0);
+          ctx.scale(p.scale || 1, p.scale || 1);
+          ctx.font = `900 ${p.size}px Pretendard, sans-serif`;
+          ctx.fillStyle = `rgba(${p.cr},${p.cg},${p.cb},${Math.max(0, p.alpha)})`;
+          ctx.fillText(p.word, 0, 0);
+          ctx.restore();
+        });
+
+        /* 골드 글로우 */
+        if (glowAlpha > 0) {
+          const g = ctx.createRadialGradient(sc.x, sc.y, 0, sc.x, sc.y, 100);
+          g.addColorStop(0, `rgba(201,168,76,${glowAlpha})`);
+          g.addColorStop(1, 'rgba(201,168,76,0)');
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(sc.x, sc.y, 100, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        t += 0.016;
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
+
+</body>
+
+</html>
