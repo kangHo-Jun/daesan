@@ -5,7 +5,6 @@ import { X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const THUMBNAIL_URL = 'https://tv.naver.com/embed/96658718';
 const MODAL_VIDEO_URL = 'https://www.youtube.com/embed/tJ_8JRkG3JI';
 
 export default function SupplyChain() {
@@ -147,12 +146,10 @@ export default function SupplyChain() {
             className="group relative mx-auto block w-full max-w-[1100px] cursor-pointer overflow-hidden rounded-[18px] border border-[#1a3a28]/10 bg-white text-left transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f0e8] hover:border-[#C9A84C]/50"
           >
             <div className="pointer-events-none relative aspect-video w-full overflow-hidden bg-[#e8e0d4]">
-              <iframe
-                title="올인원 영상 썸네일"
-                src={`${THUMBNAIL_URL}?autoPlay=false&mute=true`}
-                className="absolute inset-0 h-full w-full scale-[1.02]"
-                loading="lazy"
-                tabIndex={-1}
+              <img
+                src="/images/supply-thumbnail.png"
+                alt="대산 공급 시스템 영상"
+                className="h-full w-full object-cover"
               />
 
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(245,240,232,0.1)_0%,rgba(245,240,232,0)_54%,rgba(245,240,232,0.9)_100%)]" />

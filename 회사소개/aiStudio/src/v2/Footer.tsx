@@ -1,7 +1,5 @@
 import React from 'react';
 
-const KAKAO_CHANNEL_URL = '#';
-
 const businessHours = [
   { label: '평일', value: '06:00 ~ 16:00' },
   { label: '토요일', value: '06:00 ~ 13:00' },
@@ -20,21 +18,13 @@ export default function Footer() {
       <div className="grid grid-cols-1 gap-10 px-[40px] py-10 lg:grid-cols-[1.4fr_1fr_1fr]">
         <div className="space-y-5">
           <h2 className="text-[20px] font-extrabold tracking-[-0.04em] text-white">
-            대산<span className="text-[#C9A84C]">우드랜드</span>
+            대산
           </h2>
           <p className="text-[11px] leading-[1.7] text-white/35">
             35년의 신뢰와 AI 기술을 결합한
             <br />
             건축 자재 원스톱 공급 플랫폼
           </p>
-          <a
-            href={KAKAO_CHANNEL_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center rounded-[6px] bg-[#FEE500] px-[14px] py-[8px] text-[11px] font-bold text-[#3A1D1D]"
-          >
-            카카오톡 문의
-          </a>
         </div>
 
         <div>
