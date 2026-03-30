@@ -52,10 +52,10 @@ export default function Directions() {
       // Header
       gsap.fromTo(headerRef.current,
         { opacity: 0, y: 20 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
           scrollTrigger: {
             trigger: headerRef.current,
             start: 'top 80%',
@@ -67,10 +67,10 @@ export default function Directions() {
       // Map
       gsap.fromTo(mapContainerRef.current,
         { opacity: 0, scale: 0.98 },
-        { 
-          opacity: 1, 
-          scale: 1, 
-          duration: 1, 
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
           delay: 0.2,
           scrollTrigger: {
             trigger: mapContainerRef.current,
@@ -83,10 +83,10 @@ export default function Directions() {
       // Info Bar
       gsap.fromTo(infoBarRef.current,
         { opacity: 0, y: 10 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
           delay: 0.4,
           scrollTrigger: {
             trigger: infoBarRef.current,
@@ -106,7 +106,7 @@ export default function Directions() {
   }, []);
 
   return (
-    <section 
+    <section
       id="directions"
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-[#f5f0e8] px-[40px] py-[80px]"
@@ -135,7 +135,7 @@ export default function Directions() {
           />
         </div>
 
-        <div 
+        <div
           ref={infoBarRef}
           className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 rounded-[8px] border border-[#1a3a28]/10 bg-white px-[20px] py-[14px]"
         >
@@ -148,7 +148,7 @@ export default function Directions() {
           </div>
           <div className="hidden h-[12px] w-[1px] bg-[#1a3a28]/10 md:block" />
           <div className="flex items-center gap-2">
-            <span className="text-[12px] text-[rgba(26,58,40,0.7)]">ds-cjh@daesan.biz</span>
+            <span className="text-[12px] text-[rgba(26,58,40,0.7)]">sales@daesan.biz</span>
           </div>
         </div>
       </div>
