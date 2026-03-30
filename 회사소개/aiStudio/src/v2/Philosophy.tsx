@@ -22,14 +22,14 @@ const VALUES = [
   {
     id: '03',
     keywordKo: '품질',
-    desc: '검증된 브랜드 자재만 취급, 하자 없는 현장 완성',
+    desc: '검증된 브랜드 자재만 취급,\n하자 없는 현장 완성',
     theme: 'gold',
     gridSpan: 'col-span-2',
   },
   {
     id: '04',
     keywordKo: '가격',
-    desc: '직거래 기반 합리적 단가, 투명한 견적 공개',
+    desc: '직거래 기반 합리적 단가,\n투명한 견적 공개',
     theme: 'white',
     gridSpan: 'col-span-1',
   },
@@ -103,7 +103,7 @@ export default function Philosophy() {
                 {item.keywordKo}
               </h3>
 
-              <p className={`max-w-[240px] break-keep text-[15px] font-normal leading-[1.7] ${item.theme === 'white' ? 'text-[rgba(26,58,40,0.68)]' : 'text-white/75'}`} style={{ fontFamily: 'Pretendard, sans-serif' }}>
+              <p className={`max-w-[240px] break-keep whitespace-pre-line text-[15px] font-normal leading-[1.7] ${item.theme === 'white' ? 'text-[rgba(26,58,40,0.68)]' : 'text-white/75'}`} style={{ fontFamily: 'Pretendard, sans-serif' }}>
                 {item.desc}
               </p>
             </div>
