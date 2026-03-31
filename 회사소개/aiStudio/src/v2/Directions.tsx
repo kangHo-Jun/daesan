@@ -27,7 +27,7 @@ export default function Directions() {
         const container = document.getElementById('kakao-map');
         if (!container) return;
 
-        const position = new window.kakao.maps.LatLng(37.3943, 126.9568);
+        const position = new window.kakao.maps.LatLng(37.3894, 126.9545);
         const map = new window.kakao.maps.Map(container, {
           center: position,
           level: 3,
@@ -38,11 +38,47 @@ export default function Directions() {
           map,
         });
 
-        const infowindow = new window.kakao.maps.InfoWindow({
-          content:
-            '<div style="padding:8px 14px;font-size:13px;font-weight:700;color:#123628;font-family:Pretendard,sans-serif;">(주)대산</div>',
+        const overlayContent = `
+          <div style="
+            position: relative;
+            background: #0d2318;
+            border: 1.5px solid #C9A84C;
+            border-radius: 8px;
+            padding: 8px 14px;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          ">
+            <div style="
+              font-size: 13px;
+              font-weight: 700;
+              color: #C9A84C;
+              font-family: Pretendard, sans-serif;
+              margin-bottom: 2px;
+            ">(주)대산</div>
+            <div style="
+              font-size: 11px;
+              color: rgba(255,255,255,0.6);
+              font-family: Pretendard, sans-serif;
+            ">경기도 안양시 동안구 관악대로 279</div>
+            <div style="
+              position: absolute;
+              bottom: -7px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 0; height: 0;
+              border-left: 7px solid transparent;
+              border-right: 7px solid transparent;
+              border-top: 7px solid #C9A84C;
+            "></div>
+          </div>
+        `;
+
+        const customOverlay = new window.kakao.maps.CustomOverlay({
+          position: position,
+          content: overlayContent,
+          yAnchor: 1.4,
         });
-        infowindow.open(map, marker);
+        customOverlay.setMap(map);
       });
     };
     document.head.appendChild(script);
