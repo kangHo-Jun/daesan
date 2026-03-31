@@ -20,7 +20,7 @@ export default function Footer() {
       <div className="px-[48px] pt-[40px] pb-[32px]">
         <div className="flex flex-col gap-2">
           <h1 className="text-[28px] font-[800] text-white tracking-tight">
-            대<span className="text-[#C9A84C]">산</span>
+            대산
           </h1>
           <p className="text-[14px] text-[rgba(255,255,255,0.4)]">
             35년의 신뢰와 AI 기술을 결합한 건축 자재 원스톱 공급 플랫폼
