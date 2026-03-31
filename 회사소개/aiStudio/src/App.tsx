@@ -23,7 +23,7 @@ export default function App() {
         <Footer />
       </main>
       <a
-        href="https://daesan3833.cafe24.com"
+        href="https://daesan.ai"
         target="_blank"
         rel="noreferrer"
         style={{
