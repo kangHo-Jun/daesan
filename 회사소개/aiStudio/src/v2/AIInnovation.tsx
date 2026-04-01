@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const heroPriceRows = [
-  { label: 'LG 석고보드 9.5T', value: '₩4,200', badge: '▲ LIVE' },
+  { label: 'GS 석고보드 9.5T', value: '₩4,200', badge: '▲ LIVE' },
   { label: '합판 12T 1220×2440', value: '₩22,000' },
   { label: '각재 30×40×3600', value: '₩1,800' },
 ];

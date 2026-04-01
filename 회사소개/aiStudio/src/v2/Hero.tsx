@@ -58,7 +58,7 @@ export default function Hero() {
         <h1 className="flex flex-col items-center font-serif text-[#C9A84C] leading-[1.1] mb-12 tracking-tight">
           <div ref={title1Ref} className="mb-2 text-[36px] font-[400]" style={{ fontFamily: "'Nanum Myeongjo', serif" }}>3년 연속</div>
           <div ref={title2Ref} className="relative text-[40px] font-[700] md:text-[46px] lg:text-[52px]" style={{ fontFamily: "'Nanum Myeongjo', serif" }}>
-            LG건설 납품업체
+            GS건설 납품업체
             <svg
               className="absolute -bottom-4 left-0 w-full h-8 overflow-visible"
               viewBox="0 0 1000 30"
